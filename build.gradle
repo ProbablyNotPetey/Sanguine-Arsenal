@@ -1,0 +1,121 @@
+buildscript {
+    repositories {
+        maven { url = 'https://maven.minecraftforge.net' }
+        maven { url = 'https://repo.spongepowered.org/repository/maven-public/' }
+        mavenCentral()
+    }
+    dependencies {
+        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.1.+', changing: true
+        classpath 'org.spongepowered:mixingradle:0.7-SNAPSHOT'
+    }
+}
+apply plugin: 'net.minecraftforge.gradle'
+apply plugin: 'org.spongepowered.mixin'
+
+group = group
+version = mod_version
+
+java {
+    archivesBaseName = mod_id
+    toolchain.languageVersion = JavaLanguageVersion.of(8)
+}
+
+minecraft {
+    mappings channel: 'official', version: '1.16.5'
+
+    runs {
+        client {
+            workingDirectory project.file('run')
+            property 'forge.logging.markers', 'REGISTRIES'
+            property 'forge.logging.console.level', 'debug'
+
+            mods {
+                sanguinearsenal {
+                    source sourceSets.main
+                }
+            }
+        }
+
+        server {
+            workingDirectory project.file('run')
+            property 'forge.logging.markers', 'REGISTRIES'
+            property 'forge.logging.console.level', 'debug'
+
+            mods {
+                sanguinearsenal {
+                    source sourceSets.main
+                }
+            }
+        }
+
+        data {
+            workingDirectory project.file('run')
+            property 'forge.logging.markers', 'REGISTRIES'
+            property 'forge.logging.console.level', 'debug'
+
+            args '--mod', 'sanguinearsenal', '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
+
+            mods {
+                sanguinearsenal {
+                    source sourceSets.main
+                }
+            }
+        }
+    }
+}
+
+mixin {
+    config "sanguinearsenal.mixins.json"
+}
+
+sourceSets.main.resources { srcDir 'src/generated/resources' }
+
+repositories {
+    maven {
+        url "https://cursemaven.com"
+    }
+}
+
+dependencies {
+    minecraft 'net.minecraftforge:forge:1.16.5-36.2.33'
+    // Dependencies
+    compileOnly fg.deobf("curse.maven:curios-309927:3661903")
+    runtimeOnly fg.deobf("curse.maven:curios-309927:3661903")
+    implementation fg.deobf("curse.maven:eidolon-429625:3157832")
+
+    // Testing
+    //implementation fg.deobf("curse.maven:hexblades-528079:3528648")
+    //implementation fg.deobf("curse.maven:classicbars-317642:3240083")
+    implementation fg.deobf("curse.maven:atum2-59621:3469295")
+    implementation fg.deobf("curse.maven:twilightforest-227639:3413560")
+
+    // Just JEI
+    implementation fg.deobf("curse.maven:jei-238222:3488178")
+
+    // Compatibility
+    compileOnly fg.deobf("curse.maven:classicbars-317642:3240083")
+    compileOnly fg.deobf("curse.maven:twilightforest-227639:3413560")
+    compileOnly fg.deobf("curse.maven:atum2-59621:3469295")
+
+    annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
+}
+jar {
+    manifest {
+        attributes([
+                "Specification-Title"     : mod_name,
+                "Specification-Vendor"    : group,
+                "Specification-Version"   : mod_version, // We are version 1 of ourselves
+                "Implementation-Title"    : mod_name,
+                "Implementation-Version"  : mod_version,
+                "Implementation-Vendor"   : group,
+                "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
+        ])
+    }
+}
+
+sourceSets {
+    main {
+        ext.refMap = "sanguinearsenal.mixin-refmap.json"
+    }
+}
+jar.finalizedBy('reobfJar')

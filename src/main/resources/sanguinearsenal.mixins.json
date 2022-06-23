@@ -1,0 +1,14 @@
+{
+  "required": true,
+  "package": "com.decursioteam.sanguinearsenal.core.mixins",
+  "compatibilityLevel": "JAVA_8",
+  "refmap": "sanguinearsenal.mixin-refmap.json",
+  "mixins": [
+    "PlayerRendererMixin",
+    "SanguinePraetorEffects"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "minVersion": "0.8"
+}

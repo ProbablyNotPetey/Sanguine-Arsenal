@@ -1,0 +1,6 @@
+{
+	"parent": "item/handheld",
+	"textures": {
+		"layer0": "sanguinearsenal:items/scepter_of_blood"
+	}
+}

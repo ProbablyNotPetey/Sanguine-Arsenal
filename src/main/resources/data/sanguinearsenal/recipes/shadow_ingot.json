@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "sanguinearsenal",
+  "pattern": [
+    "xxx",
+    "xxx",
+    "xxx"
+  ],
+  "key": {
+    "x": {
+      "item": "sanguinearsenal:shadow_nugget"
+    }
+  },
+  "result": {
+    "item": "sanguinearsenal:shadow_ingot"
+  }
+}

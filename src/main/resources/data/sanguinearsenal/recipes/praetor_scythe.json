@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "GC ",
+    "CS ",
+    "  I"
+  ],
+  "key": {
+    "I": {
+      "item": "sanguinearsenal:shadow_ingot"
+    },
+    "S": {
+      "item": "eidolon:reaper_scythe"
+    },
+    "C": {
+      "item": "sanguinearsenal:sanguine_crystal"
+    },
+    "G": {
+      "item": "eidolon:gold_inlay"
+    }
+  },
+  "result": {
+    "item": "sanguinearsenal:praetor_scythe",
+    "count": 1
+  }
+}

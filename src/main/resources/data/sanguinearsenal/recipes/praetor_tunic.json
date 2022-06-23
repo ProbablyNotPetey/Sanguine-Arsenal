@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ISI",
+    "WIW",
+    "GIG"
+  ],
+  "key": {
+    "I": {
+      "item": "sanguinearsenal:shadow_ingot"
+    },
+    "S": {
+      "item": "sanguinearsenal:sigil_of_the_dark_lord"
+    },
+    "W": {
+      "item": "sanguinearsenal:crimson_weave"
+    },
+    "G": {
+      "item": "eidolon:gold_inlay"
+    }
+  },
+  "result": {
+    "item": "sanguinearsenal:sanguine_praetor_tunic",
+    "count": 1
+  }
+}

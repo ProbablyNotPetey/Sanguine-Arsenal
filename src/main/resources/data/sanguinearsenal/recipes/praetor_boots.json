@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ISI",
+    "I I"
+  ],
+  "key": {
+    "I": {
+      "item": "sanguinearsenal:shadow_ingot"
+    },
+    "S": {
+      "item": "sanguinearsenal:sigil_of_the_dark_lord"
+    }
+  },
+  "result": {
+    "item": "sanguinearsenal:sanguine_praetor_boots",
+    "count": 1
+  }
+}

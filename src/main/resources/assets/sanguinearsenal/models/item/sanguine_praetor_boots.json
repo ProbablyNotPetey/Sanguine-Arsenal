@@ -1,0 +1,6 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "sanguinearsenal:items/sanguine_praetor/sanguine_praetor_boots"
+  }
+}
