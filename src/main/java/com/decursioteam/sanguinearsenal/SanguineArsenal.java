@@ -69,7 +69,6 @@ public class SanguineArsenal {
             bus.register(Item2DRenderer.class);
             bus.addListener(this::init);
 
-            MinecraftForge.EVENT_BUS.register(new BloodBar());
 
             FMLJavaModLoadingContext.get().getModEventBus().addListener(this::clientSetup);
 //            if(ModList.get().isLoaded("classicbar")) EventHandler.register(new BloodBarClassicBars());
@@ -117,6 +116,7 @@ public class SanguineArsenal {
         InterModComms.sendTo("curios", SlotTypeMessage.REGISTER_TYPE, () -> SlotTypePreset.BELT.getMessageBuilder().build());
     }
 
+    // todo: fix
     private void init(ModelEvent.RegisterAdditional modelRegistryEvent) {
         for (String item : Item2DRenderer.HAND_MODEL_ITEMS) {
 //            ModelLoader.addSpecialModel(new ModelResourceLocation(SanguineArsenal.MOD_ID + ":" + item + "_in_hand", "inventory"));

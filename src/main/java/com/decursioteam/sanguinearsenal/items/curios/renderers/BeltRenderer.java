@@ -18,6 +18,7 @@ import top.theillusivec4.curios.api.SlotContext;
 import top.theillusivec4.curios.api.client.ICurioRenderer;
 import top.theillusivec4.curios.api.type.capability.ICurio;
 
+/*
 public class BeltRenderer implements ICurioRenderer {
 
     protected final ResourceLocation texture;
@@ -59,3 +60,4 @@ public class BeltRenderer implements ICurioRenderer {
         render(matrixStack, buffer, light, stack.hasFoil());
     }
 }
+ */

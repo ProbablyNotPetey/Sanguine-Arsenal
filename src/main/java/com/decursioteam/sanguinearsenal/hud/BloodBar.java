@@ -5,6 +5,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiComponent;
+import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -30,11 +31,11 @@ public class BloodBar {
 
 
     public static void blit(PoseStack stack, int x, int y, float u, float v, int width, int height) {
-        blit(stack, x, y, 0, u, v, width, height, 9, 27);
+        blit(stack, x, y, u, v, width, height, 27, 9);
     }
 
-    public static void blit(PoseStack stack, int x, int y, int z, float u, float v, int width, int height, int textureX, int textureY) {
-        GuiComponent.blit(stack, x, y, z, u, v, width, height, textureX, textureY);
+    public static void blit(PoseStack stack, int x, int y, float u, float v, int width, int height, int textureWidth, int textureHeight) {
+        GuiComponent.blit(stack, x, y, u, v, width, height, textureWidth, textureHeight);
     }
 
     public static final IGuiOverlay BLOOD_BAR = (new IGuiOverlay() {
@@ -64,11 +65,13 @@ public class BloodBar {
                         poseStack.pushPose();
 
 //                        int top = mc.getWindow().getGuiScaledHeight() - 39;
-                        int top = screenHeight - 39;
+                        int top = screenHeight - 49;
 
 //                        int right = mc.getWindow().getGuiScaledWidth() / 2 + 82;
                         int right = screenWidth / 2 + 82;
-                        mc.getTextureManager().bindForSetup(TEXTURE);
+
+                        RenderSystem.setShader(GameRenderer::getPositionTexShader);
+                        RenderSystem.setShaderTexture(0, TEXTURE);
                         for (int i = 0; i < 10; i++) {
                             Index index = indexes[i];
                             if (layer >= 0)
@@ -86,7 +89,7 @@ public class BloodBar {
                         }
 //                        ForgeIngameGui.right_height += 10;
                         poseStack.popPose();
-                        mc.getTextureManager().bindForSetup(GUI_ICONS_LOCATION);
+//                        mc.getTextureManager().bindForSetup(GUI_ICONS_LOCATION);
                         RenderSystem.disableBlend();
                     }
                 }
@@ -116,18 +119,18 @@ public class BloodBar {
 
         private void drawEmptyIcon(PoseStack stack, int color, int i, int guiLeft, int guiTop) {
             RenderSystem.setShaderColor((color >> 16 & 0xff) / 256f, (color >> 8 & 0xff) / 256f, (color & 0xff) / 256f, 1.0f);
-            blit(stack, guiLeft - i * 8, guiTop, 18, 27, 9, 9);
+            blit(stack, guiLeft - i * 8, guiTop, 18, 0, 9, 9);
         }
 
         private void drawFullIcon(PoseStack stack, int color, int i, int guiLeft, int guiTop) {
             RenderSystem.setShaderColor((color >> 16 & 0xff) / 256f, (color >> 8 & 0xff) / 256f, (color & 0xff) / 256f, 1.0f);
-            blit(stack, guiLeft - i * 8, guiTop, 9, 18, 9, 9);
+            blit(stack, guiLeft - i * 8, guiTop, 9, 0, 9, 9);
         }
 
         private void drawHalfIcon(PoseStack stack, int color, int i, int guiLeft, int guiTop) {
             RenderSystem.setShaderColor((color >> 16 & 0xff) / 256f, (color >> 8 & 0xff) / 256f, (color & 0xff) / 256f, 1.0f);
             drawEmptyIcon(stack, color, i, guiLeft, guiTop);
-            blit(stack, guiLeft - i * 8, guiTop, 0, 9, 9, 9);
+            blit(stack, guiLeft - i * 8, guiTop, 0, 0, 9, 9);
         }
 
     });

@@ -4,9 +4,11 @@ package com.decursioteam.sanguinearsenal.core.Util;
 import com.decursioteam.sanguinearsenal.SanguineArsenal;
 import com.decursioteam.sanguinearsenal.core.Util.KeyBinds;
 import com.decursioteam.sanguinearsenal.core.init.ModelInit;
+import com.decursioteam.sanguinearsenal.hud.BloodBar;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.EntityRenderersEvent;
+import net.minecraftforge.client.event.RegisterGuiOverlaysEvent;
 import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -33,7 +35,12 @@ public class ClientModEvents {
     }
 
     @SubscribeEvent
-    public static void registerKeyBindings(final RegisterKeyMappingsEvent event) {
+    public static void registerKeyBindings(RegisterKeyMappingsEvent event) {
         event.register(KeyBinds.BLOOD_AURA_KB);
+    }
+
+    @SubscribeEvent
+    public static void registerGuiOverlays(RegisterGuiOverlaysEvent event) {
+        event.registerAboveAll("blood", BloodBar.BLOOD_BAR);
     }
 }
