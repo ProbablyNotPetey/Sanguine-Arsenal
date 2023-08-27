@@ -2,11 +2,10 @@ package com.decursioteam.sanguinearsenal.core.init;
 
 import com.decursioteam.sanguinearsenal.SanguineArsenal;
 import com.decursioteam.sanguinearsenal.entities.FlyingScytheEntity;
-import com.decursioteam.sanguinearsenal.items.scepterofblood.BloodProjectileEntity;
+import com.decursioteam.sanguinearsenal.entities.BloodProjectileEntity;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
-import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;

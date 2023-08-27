@@ -1,4 +1,4 @@
-package com.decursioteam.sanguinearsenal.items.scepterofblood;
+package com.decursioteam.sanguinearsenal.entities;
 
 import com.decursioteam.sanguinearsenal.core.SangArsConfig;
 import elucent.eidolon.Registry;
@@ -14,6 +14,7 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 
@@ -60,10 +61,11 @@ public class BloodProjectileEntity extends SpellProjectileEntity {
     @Override
     protected void onImpact(HitResult ray) {
         onRemovedFromWorld();
-        if (level.isClientSide()) {
+        if (!level.isClientSide()) {
             Vec3 pos = ray.getLocation();
             level.playSound(null, pos.x, pos.y, pos.z, Sounds.SPLASH_SOULFIRE_EVENT.get(), SoundSource.NEUTRAL, 0.6f, random.nextFloat() * 0.2f + 0.9f);
             Networking.sendToTracking(level, blockPosition(), new MagicBurstEffectPacket(pos.x, pos.y, pos.z, ColorUtil.packColor(255, 255, 0, 23), ColorUtil.packColor(255, 255, 0, 23)));
+            this.discard();
         }
     }
 }

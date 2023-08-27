@@ -97,10 +97,10 @@ public class SangArsConfig {
                     .defineInRange("scepterOfBloodMeleeDamage", 7, 0, 100);
             scepterOfBloodMagicDamage = COMMON_BUILDER
                     .comment("Set how much magic damage the Scepter of Blood has.")
-                    .defineInRange("scepterOfBloodMagicDamage", 5.0, 0.0, 100);
+                    .defineInRange("scepterOfBloodMagicDamage", 6.0, 0.0, 100);
             scepterOfBloodAttackSpeed = COMMON_BUILDER
                     .comment("Note that the melee damage and attack speed values don't represent vanilla tools values, for example to get attack speed 1.3 vanilla you would need to set the attack speed to -2.4.", "Set the attack speed of the Scepter of Blood.")
-                    .defineInRange("scepterOfBloodAttackSpeed", 1.3, -3.5, 15);
+                    .defineInRange("scepterOfBloodAttackSpeed", -2.7, -3.5, 15);
             scepterOfBloodUseValue = COMMON_BUILDER
                     .comment("Set the amount of blood that the player needs to use the Scepter of Blood ability.")
                     .defineInRange("scepterOfBloodUseValue", 2, 0, 20);
@@ -111,7 +111,7 @@ public class SangArsConfig {
                     .defineInRange("praetorScytheMeleeDamage", 9, 0, 100);
             praetorScytheAttackSpeed = COMMON_BUILDER
                     .comment("Note that the melee damage and attack speed values don't represent vanilla tools values, for example to get attack speed 1.3 vanilla you would need to set the attack speed to -2.4.", "Set the attack speed of the Praetor's Scythe.")
-                    .defineInRange("praetorScytheAttackSpeed", 0.85, -3.5, 15);
+                    .defineInRange("praetorScytheAttackSpeed", -2.9, -3.5, 15);
             praetorScytheThrowValue = COMMON_BUILDER
                     .comment("Set the amount of blood that the player needs to throw the Praetor's Scythe using right click..")
                     .defineInRange("praetorScytheThrowValue", 5, 0, 20);

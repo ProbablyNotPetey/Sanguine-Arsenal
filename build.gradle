@@ -14,6 +14,7 @@ buildscript {
 apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'org.parchmentmc.librarian.forgegradle'
 apply plugin: 'org.spongepowered.mixin'
+apply plugin: 'java-library'
 
 group = group
 version = mod_version
@@ -86,6 +87,13 @@ repositories {
         name = "Jared's maven"
         url = "https://maven.blamejared.com/"
     }
+
+    maven { url 'https://api.modrinth.com/maven' }
+    maven { url "https://maven.shedaniel.me/" }
+    maven {
+        name "KosmX's maven"
+        url 'https://maven.kosmx.dev/'
+    }
 }
 
 dependencies {
@@ -114,6 +122,10 @@ dependencies {
 //    compileOnly fg.deobf("curse.maven:classicbars-317642:3240083")
 //    compileOnly fg.deobf("curse.maven:twilightforest-227639:3413560")
 //    compileOnly fg.deobf("curse.maven:atum2-59621:3469295")
+    runtimeOnly fg.deobf("maven.modrinth:better-combat:1.7.1+1.19-forge")
+    api fg.deobf("me.shedaniel.cloth:cloth-config-forge:8.3.103")
+    runtimeOnly fg.deobf("dev.kosmx.player-anim:player-animation-lib-forge:1.0.2")
+
 
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 }
