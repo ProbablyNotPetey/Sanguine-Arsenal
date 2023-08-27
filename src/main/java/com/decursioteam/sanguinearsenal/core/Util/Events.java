@@ -4,22 +4,24 @@ import com.decursioteam.sanguinearsenal.armor.sanguinepraetor.SPArmorItem;
 import com.decursioteam.sanguinearsenal.core.SangArsConfig;
 import com.decursioteam.sanguinearsenal.core.network.Network;
 import com.decursioteam.sanguinearsenal.core.network.messages.InputMessage;
-import elucent.eidolon.event.SpeedFactorEvent;
+import elucent.eidolon.event.StuckInBlockEvent;
 import net.minecraft.client.Minecraft;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.monster.MonsterEntity;
-import net.minecraft.entity.passive.AnimalEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.ItemStack;
-import net.minecraft.potion.Effects;
-import net.minecraft.util.DamageSource;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.animal.Animal;
+import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
-import net.minecraftforge.event.entity.living.PotionEvent;
+import net.minecraftforge.event.entity.living.MobEffectEvent;
 import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -34,7 +36,7 @@ public class Events {
     @OnlyIn(Dist.CLIENT)
     public void onClientTick(TickEvent.ClientTickEvent event) {
         Minecraft minecraft = Minecraft.getInstance();
-        PlayerEntity playerEntity = minecraft.player;
+        Player playerEntity = minecraft.player;
         if (event.phase.equals(TickEvent.Phase.END) && playerEntity != null) {
             if (hasFullSPSet(playerEntity) && BLOOD_AURA_KB.isDown()) {
                 Network.CHANNEL.sendToServer(new InputMessage());
@@ -44,35 +46,35 @@ public class Events {
 
     @SubscribeEvent
     public void onDeath(LivingDropsEvent event) {
-        LivingEntity entity = event.getEntityLiving();
-        if (entity.getLastHurtByMob() instanceof PlayerEntity) {
-            PlayerEntity playerEntity = (PlayerEntity) entity.getLastHurtByMob();
+        LivingEntity entity = event.getEntity();
+        if (entity.getLastHurtByMob() instanceof Player) {
+            Player playerEntity = (Player) entity.getLastHurtByMob();
             if (hasFullSPSet(playerEntity)) {
                 if (Math.floor(Math.random() * 100) + 1 <= 5) {
                     for (int i = 0; i < 4; i++) {
-                        if (playerEntity.hasItemInSlot(EquipmentSlotType.byTypeAndIndex(EquipmentSlotType.Group.ARMOR, i))) {
-                            int oldDamage = playerEntity.getItemBySlot(EquipmentSlotType.byTypeAndIndex(EquipmentSlotType.Group.ARMOR, i)).getDamageValue();
+                        if (playerEntity.hasItemInSlot(EquipmentSlot.byTypeAndIndex(EquipmentSlot.Type.ARMOR, i))) {
+                            int oldDamage = playerEntity.getItemBySlot(EquipmentSlot.byTypeAndIndex(EquipmentSlot.Type.ARMOR, i)).getDamageValue();
                             int newDamaged = Math.max(oldDamage + (-5), 0);
-                            playerEntity.getItemBySlot(EquipmentSlotType.byTypeAndIndex(EquipmentSlotType.Group.ARMOR, i)).setDamageValue(newDamaged);
+                            playerEntity.getItemBySlot(EquipmentSlot.byTypeAndIndex(EquipmentSlot.Type.ARMOR, i)).setDamageValue(newDamaged);
                         }
                     }
                 }
 
-                if (entity instanceof AnimalEntity) {
+                if (entity instanceof Animal) {
                     addBlood(playerEntity, SangArsConfig.COMMON.passiveEntitiesBloodValue.get());
                 }
-                if (entity instanceof MonsterEntity) {
+                if (entity instanceof Monster) {
                     addBlood(playerEntity, SangArsConfig.COMMON.aggressiveEntitiesBloodValue.get());
                 }
-                if (!(entity instanceof MonsterEntity) && !(entity instanceof AnimalEntity))
+                if (!(entity instanceof Monster) && !(entity instanceof Animal))
                     addBlood(playerEntity, SangArsConfig.COMMON.otherEntitiesBloodValue.get());
             }
         }
     }
 
     @SubscribeEvent
-    public void onApplyPotion(PotionEvent.PotionApplicableEvent event) {
-        if (event.getPotionEffect().getEffect() == Effects.MOVEMENT_SLOWDOWN && event.getEntityLiving().getItemBySlot(EquipmentSlotType.FEET).getItem() instanceof SPArmorItem) {
+    public void onApplyPotion(MobEffectEvent.Applicable event) {
+        if (event.getEffectInstance().getEffect() == MobEffects.MOVEMENT_SLOWDOWN && event.getEntity().getItemBySlot(EquipmentSlot.FEET).getItem() instanceof SPArmorItem) {
             event.setResult(Event.Result.DENY);
         }
     }
@@ -82,21 +84,21 @@ public class Events {
 
         DamageSource source = event.getSource();
 
-        if (!(source.getEntity() instanceof PlayerEntity)) {
+        if (!(source.getEntity() instanceof Player)) {
             return;
         }
 
-        PlayerEntity livingEntity = (PlayerEntity) source.getEntity();
+        Player livingEntity = (Player) source.getEntity();
 
         if (source == DamageSource.WITHER || source.isMagic()) {
 
-            ItemStack stack = livingEntity.getItemBySlot(EquipmentSlotType.HEAD);
-            ItemStack stack2 = livingEntity.getItemBySlot(EquipmentSlotType.LEGS);
+            ItemStack stack = livingEntity.getItemBySlot(EquipmentSlot.HEAD);
+            ItemStack stack2 = livingEntity.getItemBySlot(EquipmentSlot.LEGS);
             if (stack.getItem() instanceof SPArmorItem && stack2.getItem() instanceof SPArmorItem) {
                 event.setAmount(event.getAmount() * 1.7F);
             }
 
-            stack = event.getEntityLiving().getItemBySlot(EquipmentSlotType.CHEST);
+            stack = event.getEntity().getItemBySlot(EquipmentSlot.CHEST);
 
             if (stack.getItem() instanceof SPArmorItem) {
                 event.setAmount(event.getAmount() * 1.7F);
@@ -107,12 +109,12 @@ public class Events {
             }
 
         } else if (source == DamageSource.FALL || source == DamageSource.ANVIL || source == DamageSource.HOT_FLOOR || source.isExplosion()) {
-            ItemStack stack = livingEntity.getItemBySlot(EquipmentSlotType.LEGS);
+            ItemStack stack = livingEntity.getItemBySlot(EquipmentSlot.LEGS);
             if (stack.getItem() instanceof SPArmorItem) {
                 event.setAmount(event.getAmount() * 1.25F);
             }
         } else if (source == DamageSource.SWEET_BERRY_BUSH) {
-            ItemStack stack = livingEntity.getItemBySlot(EquipmentSlotType.FEET);
+            ItemStack stack = livingEntity.getItemBySlot(EquipmentSlot.FEET);
             if (stack.getItem() instanceof SPArmorItem && event.isCancelable()) {
                 event.setCanceled(true);
             }
@@ -121,12 +123,12 @@ public class Events {
     }
 
     @SubscribeEvent
-    public void onGetSpeedFactor(SpeedFactorEvent event) {
-        if ((event.getSpeedFactor() < 1.0F) && event.getEntity() instanceof LivingEntity) {
-            ItemStack stack = ((LivingEntity) event.getEntity()).getItemBySlot(EquipmentSlotType.FEET);
+    public void onGetSpeedFactor(StuckInBlockEvent event) {
+        if ((event.getStuckMultiplier().length() < 1.0F) && event.getEntity() instanceof LivingEntity) {
+            ItemStack stack = ((LivingEntity) event.getEntity()).getItemBySlot(EquipmentSlot.FEET);
             if ((stack.getItem() instanceof SPArmorItem)) {
-                float diff = 1.0F - event.getSpeedFactor();
-                event.setSpeedFactor(1.0F - diff / 2.0F);
+                Vec3 diff = (new Vec3(1.0D, 1.0D, 1.0D)).subtract(event.getStuckMultiplier()).scale(0.5D);
+                event.setStuckMultiplier((new Vec3(1.0D, 1.0D, 1.0D)).subtract(diff));
             }
         }
 

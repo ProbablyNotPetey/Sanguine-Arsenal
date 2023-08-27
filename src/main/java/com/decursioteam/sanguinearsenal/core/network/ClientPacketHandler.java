@@ -5,9 +5,9 @@ import com.decursioteam.sanguinearsenal.core.network.messages.BloodMessage;
 import com.decursioteam.sanguinearsenal.core.network.messages.ParticleMessage;
 import com.decursioteam.sanguinearsenal.core.particles.circle.CircleTintData;
 import net.minecraft.client.Minecraft;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.math.MathHelper;
-import net.minecraftforge.fml.network.NetworkEvent;
+import net.minecraft.util.Mth;
+import net.minecraft.world.entity.player.Player;
+import net.minecraftforge.network.NetworkEvent;
 
 import java.awt.*;
 import java.util.function.Supplier;
@@ -30,13 +30,13 @@ public class ClientPacketHandler {
 
     public static void particleMessageHandler(ParticleMessage message, Supplier<NetworkEvent.Context> contextSupplier) {
         assert mc.player != null;
-        PlayerEntity playerEntity = mc.player;
+        Player playerEntity = mc.player;
         assert mc.level != null;
         if(getBloodAura(playerEntity)){
             for (int i = 0; i < 2; i++) {
                 float angle = (-0.02F * (playerEntity.tickCount * 3 + i * 160));
-                double extraX = (double) (5 * 0.5F * MathHelper.sin((float) (Math.PI + angle))) + playerEntity.position().x;
-                double extraZ = (double) (5 * 0.5F * MathHelper.cos(angle)) + playerEntity.position().z;
+                double extraX = (double) (5 * 0.5F * Mth.sin((float) (Math.PI + angle))) + playerEntity.position().x;
+                double extraZ = (double) (5 * 0.5F * Mth.cos(angle)) + playerEntity.position().z;
                 double extraY = playerEntity.position().y + 0.5F;
                 mc.level.addParticle(new CircleTintData(
                                 new Color(255, 0, 23), 0.5F,

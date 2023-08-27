@@ -1,38 +1,42 @@
 package com.decursioteam.sanguinearsenal.core.Util;
 
 
-import com.mojang.blaze3d.matrix.MatrixStack;
-import net.minecraft.block.BlockState;
-import net.minecraft.client.renderer.model.*;
+import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.renderer.block.model.BakedQuad;
+import net.minecraft.client.renderer.block.model.ItemOverrides;
+import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.util.Direction;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.client.resources.model.BakedModel;
+import net.minecraft.client.resources.model.ModelResourceLocation;
+import net.minecraft.core.Direction;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.ForgeHooksClient;
-import net.minecraftforge.client.event.ModelBakeEvent;
+import net.minecraftforge.client.event.ModelEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 
 @OnlyIn(Dist.CLIENT)
 public class Item2DRenderer {
     public static final String[] HAND_MODEL_ITEMS = new String[]{"scepter_of_blood", "praetor_scythe"};
 
     @SubscribeEvent
-    public static void onModelBakeEvent(ModelBakeEvent event) {
-        Map<ResourceLocation, IBakedModel> map = event.getModelRegistry();
+    public static void onModelBakeEvent(ModelEvent.BakingCompleted event) {
+        Map<ResourceLocation, BakedModel> map = event.getModels();
         for (String item : HAND_MODEL_ITEMS) {
             ResourceLocation modelInventory = new ModelResourceLocation("sanguinearsenal:" + item, "inventory");
             ResourceLocation modelHand = new ModelResourceLocation("sanguinearsenal:" + item + "_in_hand", "inventory");
 
-            IBakedModel bakedModelDefault = map.get(modelInventory);
-            IBakedModel bakedModelHand = map.get(modelHand);
-            IBakedModel modelWrapper = new IBakedModel() {
+            BakedModel bakedModelDefault = map.get(modelInventory);
+            BakedModel bakedModelHand = map.get(modelHand);
+            BakedModel modelWrapper = new BakedModel() {
                 @Override
-                public List<BakedQuad> getQuads(BlockState state, Direction side, Random rand) {
+                public List<BakedQuad> getQuads(BlockState state, Direction side, RandomSource rand) {
                     return bakedModelDefault.getQuads(state, side, rand);
                 }
 
@@ -62,19 +66,20 @@ public class Item2DRenderer {
                 }
 
                 @Override
-                public ItemOverrideList getOverrides() {
+                public ItemOverrides getOverrides() {
                     return bakedModelDefault.getOverrides();
                 }
 
-                @Override
-                public IBakedModel handlePerspective(ItemCameraTransforms.TransformType cameraTransformType, MatrixStack mat) {
-                    IBakedModel modelToUse = bakedModelDefault;
-                    if (cameraTransformType == ItemCameraTransforms.TransformType.FIRST_PERSON_LEFT_HAND || cameraTransformType == ItemCameraTransforms.TransformType.FIRST_PERSON_RIGHT_HAND
-                            || cameraTransformType == ItemCameraTransforms.TransformType.THIRD_PERSON_LEFT_HAND || cameraTransformType == ItemCameraTransforms.TransformType.THIRD_PERSON_RIGHT_HAND) {
-                        modelToUse = bakedModelHand;
-                    }
-                    return ForgeHooksClient.handlePerspective(modelToUse, cameraTransformType, mat);
-                }
+                //todo : is this needed?
+//                @Override
+//                public BakedModel handlePerspective(ItemTransforms.TransformType cameraTransformType, PoseStack mat) {
+//                    BakedModel modelToUse = bakedModelDefault;
+//                    if (cameraTransformType == ItemTransforms.TransformType.FIRST_PERSON_LEFT_HAND || cameraTransformType == ItemTransforms.TransformType.FIRST_PERSON_RIGHT_HAND
+//                            || cameraTransformType == ItemTransforms.TransformType.THIRD_PERSON_LEFT_HAND || cameraTransformType == ItemTransforms.TransformType.THIRD_PERSON_RIGHT_HAND) {
+//                        modelToUse = bakedModelHand;
+//                    }
+//                    return ForgeHooksClient.handlePerspective(modelToUse, cameraTransformType, mat);
+//                }
             };
             map.put(modelInventory, modelWrapper);
         }

@@ -1,10 +1,11 @@
 package com.decursioteam.sanguinearsenal.core.Util;
 
 import com.decursioteam.sanguinearsenal.SanguineArsenal;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 
 public class Keys {
-    public static final TranslationTextComponent NOT_ENOUGH_BLOOD = new TranslationTextComponent(SanguineArsenal.MOD_ID + ".not_enough_blood");
-    public static final TranslationTextComponent BLOOD_AURA_AVAILABLE = new TranslationTextComponent(SanguineArsenal.MOD_ID + ".blood_aura_available");
-    public static final TranslationTextComponent NO_PRAETOR_ARMOR = new TranslationTextComponent(SanguineArsenal.MOD_ID + ".no_praetor_armor");
+    public static final MutableComponent NOT_ENOUGH_BLOOD = Component.translatable(SanguineArsenal.MOD_ID + ".not_enough_blood");
+    public static final MutableComponent BLOOD_AURA_AVAILABLE = Component.translatable(SanguineArsenal.MOD_ID + ".blood_aura_available");
+    public static final MutableComponent NO_PRAETOR_ARMOR = Component.translatable(SanguineArsenal.MOD_ID + ".no_praetor_armor");
 }

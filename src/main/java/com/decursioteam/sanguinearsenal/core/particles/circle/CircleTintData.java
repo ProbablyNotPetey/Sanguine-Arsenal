@@ -5,16 +5,16 @@ import com.mojang.brigadier.StringReader;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.particles.IParticleData;
-import net.minecraft.particles.ParticleType;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.core.particles.ParticleOptions;
+import net.minecraft.core.particles.ParticleType;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.util.Mth;
 
 import javax.annotation.Nonnull;
 import java.awt.*;
 import java.util.Locale;
 
-public class CircleTintData implements IParticleData {
+public class CircleTintData implements ParticleOptions {
     public static final Codec<CircleTintData> CODEC = RecordCodecBuilder.create(
             instance -> instance.group(
                     Codec.INT.fieldOf("tint").forGetter(d -> d.tint.getRGB()),
@@ -24,16 +24,16 @@ public class CircleTintData implements IParticleData {
                     Codec.BOOL.fieldOf("should_collide").forGetter(d -> d.shouldCollide)
             ).apply(instance, CircleTintData::new)
     );
-    public static final IDeserializer<CircleTintData> DESERIALIZER = new IDeserializer<CircleTintData>() {
+    public static final Deserializer<CircleTintData> DESERIALIZER = new Deserializer<CircleTintData>() {
         @Nonnull
         @Override
         public CircleTintData fromCommand(@Nonnull ParticleType<CircleTintData> type, @Nonnull StringReader reader) throws CommandSyntaxException {
             reader.expect(' ');
-            int red = MathHelper.clamp(reader.readInt(), 0, 255);
+            int red = Mth.clamp(reader.readInt(), 0, 255);
             reader.expect(' ');
-            int green = MathHelper.clamp(reader.readInt(), 0, 255);
+            int green = Mth.clamp(reader.readInt(), 0, 255);
             reader.expect(' ');
-            int blue = MathHelper.clamp(reader.readInt(), 0, 255);
+            int blue = Mth.clamp(reader.readInt(), 0, 255);
 
             reader.expect(' ');
             float diameter = validateDiameter(reader.readFloat());
@@ -52,10 +52,10 @@ public class CircleTintData implements IParticleData {
 
         @Nonnull
         @Override
-        public CircleTintData fromNetwork(@Nonnull ParticleType<CircleTintData> type, PacketBuffer buf) {
-            int red = MathHelper.clamp(buf.readInt(), 0, 255);
-            int green = MathHelper.clamp(buf.readInt(), 0, 255);
-            int blue = MathHelper.clamp(buf.readInt(), 0, 255);
+        public CircleTintData fromNetwork(@Nonnull ParticleType<CircleTintData> type, FriendlyByteBuf buf) {
+            int red = Mth.clamp(buf.readInt(), 0, 255);
+            int green = Mth.clamp(buf.readInt(), 0, 255);
+            int blue = Mth.clamp(buf.readInt(), 0, 255);
             Color color = new Color(red, green, blue);
 
             float diameter = validateDiameter(buf.readFloat());
@@ -93,7 +93,7 @@ public class CircleTintData implements IParticleData {
     }
 
     private static float validateDiameter(float diameter) {
-        return (float) MathHelper.clamp(diameter, 0.05, 5.0);
+        return (float) Mth.clamp(diameter, 0.05, 5.0);
     }
 
     public Color getTint() {
@@ -123,7 +123,7 @@ public class CircleTintData implements IParticleData {
     }
 
     @Override
-    public void writeToNetwork(PacketBuffer buf) {
+    public void writeToNetwork(FriendlyByteBuf buf) {
         buf.writeInt(tint.getRed());
         buf.writeInt(tint.getGreen());
         buf.writeInt(tint.getBlue());
@@ -136,7 +136,8 @@ public class CircleTintData implements IParticleData {
     @Nonnull
     @Override
     public String writeToString() {
-        return String.format(Locale.ROOT, "%s %i %i %i %.2f %i %f %b",
-                this.getType().getRegistryName(), tint.getRed(), tint.getGreen(), tint.getBlue(), diameter, lifeTime, resizeSpeed, shouldCollide);
+        return String.format(Locale.ROOT, "%s %d %d %d %.2f %d %f %b",
+//                this.getType().getRegistryName(), tint.getRed(), tint.getGreen(), tint.getBlue(), diameter, lifeTime, resizeSpeed, shouldCollide);
+                this.getClass().getSimpleName(), tint.getRed(), tint.getGreen(), tint.getBlue(), diameter, lifeTime, resizeSpeed, shouldCollide);
     }
 }

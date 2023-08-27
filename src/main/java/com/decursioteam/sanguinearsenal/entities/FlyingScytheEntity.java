@@ -1,40 +1,40 @@
 package com.decursioteam.sanguinearsenal.entities;
 
 import com.decursioteam.sanguinearsenal.core.init.EntityInit;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityPredicate;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.item.ArmorStandEntity;
-import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.entity.passive.AnimalEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.projectile.ProjectileItemEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.IPacket;
-import net.minecraft.network.datasync.DataParameter;
-import net.minecraft.network.datasync.DataSerializers;
-import net.minecraft.network.datasync.EntityDataManager;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.EntityRayTraceResult;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
-import net.minecraftforge.fml.network.NetworkHooks;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.targeting.TargetingConditions;
+import net.minecraft.world.entity.animal.Animal;
+import net.minecraft.world.entity.decoration.ArmorStand;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.util.Mth;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.EntityHitResult;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.entity.projectile.ThrowableItemProjectile;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.items.ItemHandlerHelper;
+import net.minecraftforge.network.NetworkHooks;
 
 import java.util.UUID;
 
-public class FlyingScytheEntity extends ProjectileItemEntity {
-    public static final DataParameter<ItemStack> SCYTHE = EntityDataManager.defineId(FlyingScytheEntity.class, DataSerializers.ITEM_STACK);
+public class FlyingScytheEntity extends ThrowableItemProjectile {
+    public static final EntityDataAccessor<ItemStack> SCYTHE = SynchedEntityData.defineId(FlyingScytheEntity.class, EntityDataSerializers.ITEM_STACK);
     public ItemStack scythe;
     public UUID ownerUUID;
-    public PlayerEntity owner;
-    public Vector3d shooterPos;
+    public Player owner;
+    public Vec3 shooterPos;
 
     public int slot;
     public float damage;
@@ -42,18 +42,18 @@ public class FlyingScytheEntity extends ProjectileItemEntity {
     public int returnAge=15;
     public boolean returning;
 
-    public FlyingScytheEntity(World level)
+    public FlyingScytheEntity(Level level)
     {
         super(EntityInit.FLYING_SCYTHE.get(), level);
         noPhysics = false;
     }
-    public PlayerEntity owner()
+    public Player owner()
     {
         if (owner == null)
         {
             if (!level.isClientSide())
             {
-                owner = (PlayerEntity) ((ServerWorld) level).getEntity(ownerUUID);
+                owner = (Player) ((ServerLevel) level).getEntity(ownerUUID);
             }
         }
         return owner;
@@ -68,23 +68,23 @@ public class FlyingScytheEntity extends ProjectileItemEntity {
     }
     public void shootFromRotation(Entity shooter, float rotationPitch, float rotationYaw, float pitchOffset, float velocity, float innacuracy)
     {
-        float f = -MathHelper.sin(rotationYaw * ((float)Math.PI / 180F)) * MathHelper.cos(rotationPitch * ((float)Math.PI / 180F));
-        float f1 = -MathHelper.sin((rotationPitch + pitchOffset) * ((float)Math.PI / 180F));
-        float f2 = MathHelper.cos(rotationYaw * ((float)Math.PI / 180F)) * MathHelper.cos(rotationPitch * ((float)Math.PI / 180F));
+        float f = -Mth.sin(rotationYaw * ((float)Math.PI / 180F)) * Mth.cos(rotationPitch * ((float)Math.PI / 180F));
+        float f1 = -Mth.sin((rotationPitch + pitchOffset) * ((float)Math.PI / 180F));
+        float f2 = Mth.cos(rotationYaw * ((float)Math.PI / 180F)) * Mth.cos(rotationPitch * ((float)Math.PI / 180F));
         this.shoot(f, f1, f2, velocity, innacuracy);
         this.shooterPos = shooter.position();
-        Vector3d vec3 = shooter.getDeltaMovement();
+        Vec3 vec3 = shooter.getDeltaMovement();
         this.setDeltaMovement(this.getDeltaMovement().add(vec3.x, 0, vec3.z));
     }
 
     @Override
-    protected void onHitBlock(BlockRayTraceResult result) {
+    protected void onHitBlock(BlockHitResult result) {
         super.onHitBlock(result);
         returning = true;
     }
 
     @Override
-    protected void onHitEntity(EntityRayTraceResult result) {
+    protected void onHitEntity(EntityHitResult result) {
         DamageSource source = DamageSource.indirectMobAttack(this, owner());
         Entity entity = result.getEntity();
         if (level.isClientSide()) return;
@@ -97,7 +97,7 @@ public class FlyingScytheEntity extends ProjectileItemEntity {
             {
                 if (entity instanceof LivingEntity)
                 {
-                    scythe.hurtAndBreak(1, owner(), (e) -> remove());
+                    scythe.hurtAndBreak(1, owner(), (e) -> remove(RemovalReason.DISCARDED));
                 }
             }
             returning = true;
@@ -115,22 +115,22 @@ public class FlyingScytheEntity extends ProjectileItemEntity {
 
         if (!level.isClientSide())
         {
-            PlayerEntity playerEntity = owner();
+            Player playerEntity = owner();
             if (playerEntity == null || !playerEntity.isAlive())
             {
                 ItemEntity entityitem = new ItemEntity(level, getX(), getY() + 0.5, getZ(), scythe);
                 entityitem.setPickUpDelay(40);
                 entityitem.setDeltaMovement(entityitem.getDeltaMovement().multiply(0, 1, 0));
                 level.addFreshEntity(entityitem);
-                remove();
+                remove(RemovalReason.DISCARDED);
                 return;
             }
-            if (this.xRot == 0.0F && this.yRot == 0.0F)
+            if (this.getXRot() == 0.0F && this.getYRot() == 0.0F)
             {
-                Vector3d vector3d = getDeltaMovement();
-                setYBodyRot((float) (MathHelper.atan2(vector3d.x, vector3d.z) * (double) (180F / (float) Math.PI)));
-                this.yRotO = this.yRot;
-                this.xRotO = this.xRot;
+                Vec3 vector3d = getDeltaMovement();
+                setYBodyRot((float) (Mth.atan2(vector3d.x, vector3d.z) * (double) (180F / (float) Math.PI)));
+                this.yRotO = this.getYRot();
+                this.xRotO = this.getXRot();
             }
             if (shooterPos != null && shooterPos.distanceTo(this.position()) > 15) {
                 returning = true;
@@ -138,20 +138,19 @@ public class FlyingScytheEntity extends ProjectileItemEntity {
             else if (age > returnAge) returning = true;
             if (age < 10) noPhysics = true;
             if(age >= 1){
-                EntityPredicate PREDICATE = (new EntityPredicate()).range(12.0D);
-                LivingEntity nearestEntity = level.getNearestEntity(LivingEntity.class, PREDICATE, playerEntity, getX(), getY(), getZ(), getBoundingBox().inflate(12.0D, 2.0D, 12.0D));
+                LivingEntity nearestEntity = level.getNearestEntity(LivingEntity.class, TargetingConditions.forNonCombat(), playerEntity, getX(), getY(), getZ(), getBoundingBox().inflate(12.0D, 2.0D, 12.0D));
 
-                if(nearestEntity != null && nearestEntity != playerEntity && !(nearestEntity instanceof AnimalEntity) && !(nearestEntity instanceof ArmorStandEntity)) {
-                    Vector3d entityPos = nearestEntity.position().add(0, 1, 0);
-                    Vector3d motion = entityPos.subtract(position());
+                if(nearestEntity != null && nearestEntity != playerEntity && !(nearestEntity instanceof Animal) && !(nearestEntity instanceof ArmorStand)) {
+                    Vec3 entityPos = nearestEntity.position().add(0, 1, 0);
+                    Vec3 motion = entityPos.subtract(position());
                     setDeltaMovement(motion.normalize().scale(0.75f));
                 }
             }
             if (returning)
             {
                 noPhysics = true;
-                Vector3d ownerPos = playerEntity.position().add(0, 1, 0);
-                Vector3d motion = ownerPos.subtract(position());
+                Vec3 ownerPos = playerEntity.position().add(0, 1, 0);
+                Vec3 motion = ownerPos.subtract(position());
                 setDeltaMovement(motion.normalize().scale(0.75f));
             }
             float distance = distanceTo(playerEntity);
@@ -161,14 +160,14 @@ public class FlyingScytheEntity extends ProjectileItemEntity {
                 {
                     if (isAlive())
                     {
-                        if(playerEntity.inventory.getFreeSlot() == -1) return;
+                        if(playerEntity.getInventory().getFreeSlot() == -1) return;
                         else ItemHandlerHelper.giveItemToPlayer(playerEntity, scythe, slot);
-                        if (!playerEntity.abilities.instabuild)
+                        if (!playerEntity.getAbilities().instabuild)
                         {
                             int cooldown = 20;
                             playerEntity.getCooldowns().addCooldown(scythe.getItem(), cooldown);
                         }
-                        remove();
+                        remove(RemovalReason.DISCARDED);
                     }
                 }
             }
@@ -176,7 +175,7 @@ public class FlyingScytheEntity extends ProjectileItemEntity {
     }
 
     @Override
-    public void addAdditionalSaveData(CompoundNBT compound) {
+    public void addAdditionalSaveData(CompoundTag compound) {
         super.addAdditionalSaveData(compound);
         compound.put("scythe", scythe.serializeNBT());
         if (ownerUUID != null)
@@ -191,7 +190,7 @@ public class FlyingScytheEntity extends ProjectileItemEntity {
     }
 
     @Override
-    public void readAdditionalSaveData(CompoundNBT compound) {
+    public void readAdditionalSaveData(CompoundTag compound) {
         super.readAdditionalSaveData(compound);
 
         if (compound.contains("scythe"))
@@ -213,7 +212,7 @@ public class FlyingScytheEntity extends ProjectileItemEntity {
     }
 
     @Override
-    public IPacket<?> getAddEntityPacket() {
+    public Packet<?> getAddEntityPacket() {
         return NetworkHooks.getEntitySpawningPacket(this);
     }
 

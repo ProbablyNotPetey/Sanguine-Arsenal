@@ -7,33 +7,33 @@ import com.decursioteam.sanguinearsenal.items.ToolTipItem;
 import com.decursioteam.sanguinearsenal.items.curios.bloodflask.BloodFlaskItem;
 import com.decursioteam.sanguinearsenal.items.scepterofblood.ScepterOfBloodItem;
 import com.decursioteam.sanguinearsenal.items.swords.PraetorScythe;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.Food;
-import net.minecraft.item.Item;
-import net.minecraft.item.Rarity;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.Effects;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraftforge.fml.RegistryObject;
+import net.minecraft.ChatFormatting;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.food.FoodProperties;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Rarity;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegistryObject;
 
 public class ItemInit {
 
 
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, SanguineArsenal.MOD_ID);
     public static final RegistryObject<Item> SP_BOOTS = ITEMS.register("sanguine_praetor_boots",
-            () -> new SPArmorItem(EquipmentSlotType.FEET,
-                    new Item.Properties().tab(SangArsItemGroup.SANGUINE_ARSENAL).rarity(Rarity.create("SANGUINE", TextFormatting.RED))));
+            () -> new SPArmorItem(EquipmentSlot.FEET,
+                    new Item.Properties().tab(SangArsItemGroup.SANGUINE_ARSENAL).rarity(Rarity.create("SANGUINE", ChatFormatting.RED))));
     public static final RegistryObject<Item> SP_LEGGINGS = ITEMS.register("sanguine_praetor_leggings",
-            () -> new SPArmorItem(EquipmentSlotType.LEGS,
-                    new Item.Properties().tab(SangArsItemGroup.SANGUINE_ARSENAL).rarity(Rarity.create("SANGUINE", TextFormatting.RED))));
+            () -> new SPArmorItem(EquipmentSlot.LEGS,
+                    new Item.Properties().tab(SangArsItemGroup.SANGUINE_ARSENAL).rarity(Rarity.create("SANGUINE", ChatFormatting.RED))));
     public static final RegistryObject<Item> SP_CHESTPLATE = ITEMS.register("sanguine_praetor_tunic",
-            () -> new SPArmorItem(EquipmentSlotType.CHEST,
-                    new Item.Properties().tab(SangArsItemGroup.SANGUINE_ARSENAL).rarity(Rarity.create("SANGUINE", TextFormatting.RED))));
+            () -> new SPArmorItem(EquipmentSlot.CHEST,
+                    new Item.Properties().tab(SangArsItemGroup.SANGUINE_ARSENAL).rarity(Rarity.create("SANGUINE", ChatFormatting.RED))));
     public static final RegistryObject<Item> SP_HELMET = ITEMS.register("sanguine_praetor_hood",
-            () -> new SPArmorItem(EquipmentSlotType.HEAD,
-                    new Item.Properties().tab(SangArsItemGroup.SANGUINE_ARSENAL).rarity(Rarity.create("SANGUINE", TextFormatting.RED))));
+            () -> new SPArmorItem(EquipmentSlot.HEAD,
+                    new Item.Properties().tab(SangArsItemGroup.SANGUINE_ARSENAL).rarity(Rarity.create("SANGUINE", ChatFormatting.RED))));
 
 
     public static final RegistryObject<Item> CRIMSON_WEAVE = ITEMS.register("crimson_weave",
@@ -43,9 +43,9 @@ public class ItemInit {
                     rarity(Rarity.UNCOMMON).stacksTo(1).setNoRepair()));
     public static final RegistryObject<Item> PRAETOR_SCYTHE = ITEMS.register("praetor_scythe",
             () -> new PraetorScythe(new Item.Properties().tab(SangArsItemGroup.SANGUINE_ARSENAL).
-                    rarity(Rarity.create("SANGUINE", TextFormatting.RED)).stacksTo(1).setNoRepair()));
+                    rarity(Rarity.create("SANGUINE", ChatFormatting.RED)).stacksTo(1).setNoRepair()));
 
-    public static final RegistryObject<Item> ZOMBIE_HEART_STEW = ITEMS.register("zombie_heart_stew", () -> new ToolTipItem(new Item.Properties().tab(SangArsItemGroup.SANGUINE_ARSENAL).stacksTo(16).food(new Food.Builder().effect(() -> new EffectInstance(Effects.REGENERATION, 2200, 2), 0.85F).alwaysEat().nutrition(20).meat().saturationMod(1.5F).build())));
+    public static final RegistryObject<Item> ZOMBIE_HEART_STEW = ITEMS.register("zombie_heart_stew", () -> new ToolTipItem(new Item.Properties().tab(SangArsItemGroup.SANGUINE_ARSENAL).stacksTo(16).food(new FoodProperties.Builder().effect(() -> new MobEffectInstance(MobEffects.REGENERATION, 2200, 2), 0.85F).alwaysEat().nutrition(20).meat().saturationMod(1.5F).build())));
 
     public static final RegistryObject<Item> SANGUINE_CRYSTAL = ITEMS.register("sanguine_crystal",
             () -> new SigilOfTheDarkLord(new Item.Properties().tab(SangArsItemGroup.SANGUINE_ARSENAL).stacksTo(1)));

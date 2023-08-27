@@ -1,11 +1,8 @@
 package com.decursioteam.sanguinearsenal.items.curios.bloodflask;
 
-import com.decursioteam.sanguinearsenal.items.curios.renderers.CurioRenderers;
-import com.mojang.blaze3d.matrix.MatrixStack;
-import net.minecraft.client.renderer.IRenderTypeBuffer;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Rarity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Rarity;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.eventbus.api.Event;
@@ -37,7 +34,7 @@ public abstract class BloodFlaskCurio extends BloodFlask implements ICurioItem {
     }
 
     protected <T extends LivingEvent> void addListener(EventPriority priority, Class<T> eventClass, BiConsumer<T, LivingEntity> listener) {
-        addListener(priority, eventClass, listener, LivingEvent::getEntityLiving);
+        addListener(priority, eventClass, listener, LivingEvent::getEntity);
     }
 
     protected <T extends LivingEvent> void addListener(Class<T> eventClass, BiConsumer<T, LivingEntity> listener) {
@@ -54,14 +51,14 @@ public abstract class BloodFlaskCurio extends BloodFlask implements ICurioItem {
         return true;
     }
 
-    @Override
-    public boolean canRender(String identifier, int index, LivingEntity livingEntity, ItemStack stack) {
-        return CurioRenderers.getRenderer(this) != null;
-    }
+//    @Override
+//    public boolean canRender(String identifier, int index, LivingEntity livingEntity, ItemStack stack) {
+//        return CurioRenderers.getRenderer(this) != null;
+//    }
 
-    @Override
-    public void render(String identifier, int index, MatrixStack matrixStack, IRenderTypeBuffer buffer, int light, LivingEntity entity, float limbSwing, float limbSwingAmount, float partialTicks, float ticks, float headYaw, float headPitch, ItemStack stack) {
-        CurioRenderers.getRenderer(this).render(identifier, index, matrixStack, buffer, light, entity, limbSwing, limbSwingAmount, partialTicks, ticks, headYaw, headPitch, stack);
-    }
+//    @Override
+//    public void render(String identifier, int index, PoseStack matrixStack, IRenderTypeBuffer buffer, int light, LivingEntity entity, float limbSwing, float limbSwingAmount, float partialTicks, float ticks, float headYaw, float headPitch, ItemStack stack) {
+//        CurioRenderers.getRenderer(this).render(identifier, index, matrixStack, buffer, light, entity, limbSwing, limbSwingAmount, partialTicks, ticks, headYaw, headPitch, stack);
+//    }
 
 }

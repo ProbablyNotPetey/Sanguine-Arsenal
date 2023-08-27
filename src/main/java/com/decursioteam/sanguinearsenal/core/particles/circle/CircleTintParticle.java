@@ -2,44 +2,45 @@ package com.decursioteam.sanguinearsenal.core.particles.circle;
 
 import com.decursioteam.sanguinearsenal.SanguineArsenal;
 import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.vertex.BufferBuilder;
+import com.mojang.blaze3d.vertex.DefaultVertexFormat;
+import com.mojang.blaze3d.vertex.Tesselator;
+import com.mojang.blaze3d.vertex.VertexFormat;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.particle.IAnimatedSprite;
-import net.minecraft.client.particle.IParticleRenderType;
-import net.minecraft.client.particle.SpriteTexturedParticle;
-import net.minecraft.client.renderer.BufferBuilder;
+import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.client.particle.ParticleRenderType;
+import net.minecraft.client.particle.SpriteSet;
+import net.minecraft.client.particle.TextureSheetParticle;
 import net.minecraft.client.renderer.LightTexture;
-import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.texture.AtlasTexture;
+import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.renderer.texture.TextureManager;
-import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
-import net.minecraft.client.world.ClientWorld;
 import org.lwjgl.opengl.GL11;
 
 import javax.annotation.Nonnull;
 import java.awt.*;
 import java.util.Objects;
 
-public class CircleTintParticle extends SpriteTexturedParticle {
-    private static final IParticleRenderType RENDERER = new IParticleRenderType() {
+public class CircleTintParticle extends TextureSheetParticle {
+    private static final ParticleRenderType RENDERER = new ParticleRenderType() {
         @Override
         public void begin(BufferBuilder bufferBuilder, TextureManager textureManager) {
             RenderSystem.depthMask(false);
             RenderSystem.enableBlend();
             RenderSystem.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE);
-            RenderSystem.alphaFunc(GL11.GL_GREATER, 0.001F);
-            RenderSystem.disableLighting();
+//            RenderSystem.alphaFunc(GL11.GL_GREATER, 0.001F);
+//            RenderSystem.disableLighting();
 
-            textureManager.bind(AtlasTexture.LOCATION_PARTICLES);
-            Objects.requireNonNull(textureManager.getTexture(AtlasTexture.LOCATION_PARTICLES)).setBlurMipmap(true, false);
-            bufferBuilder.begin(GL11.GL_QUADS, DefaultVertexFormats.PARTICLE);
+            textureManager.bindForSetup(TextureAtlas.LOCATION_PARTICLES);
+            Objects.requireNonNull(textureManager.getTexture(TextureAtlas.LOCATION_PARTICLES)).setBlurMipmap(true, false);
+            bufferBuilder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.PARTICLE);
         }
 
         @Override
-        public void end(Tessellator tessellator) {
+        public void end(Tesselator tessellator) {
             tessellator.end();
             RenderSystem.enableDepthTest();
-            Objects.requireNonNull(Minecraft.getInstance().textureManager.getTexture(AtlasTexture.LOCATION_PARTICLES)).restoreLastBlurMipmap();
-            RenderSystem.alphaFunc(GL11.GL_GREATER, 0.1F);
+            Objects.requireNonNull(Minecraft.getInstance().textureManager.getTexture(TextureAtlas.LOCATION_PARTICLES)).restoreLastBlurMipmap();
+//            RenderSystem.alphaFunc(GL11.GL_GREATER, 0.1F);
             RenderSystem.disableBlend();
             RenderSystem.depthMask(true);
         }
@@ -51,9 +52,9 @@ public class CircleTintParticle extends SpriteTexturedParticle {
     };
     final float resizeSpeed;
 
-    public CircleTintParticle(ClientWorld world, double x, double y, double z, double velocityX,
+    public CircleTintParticle(ClientLevel world, double x, double y, double z, double velocityX,
                               double velocityY, double velocityZ, Color spark, float diameter,
-                              int lifeTime, float resizeSpeed, boolean shouldCollide, IAnimatedSprite sprites) {
+                              int lifeTime, float resizeSpeed, boolean shouldCollide, SpriteSet sprites) {
         super(world, x, y, z, velocityX, velocityY, velocityZ);
         this.resizeSpeed = resizeSpeed;
         setColor(spark.getRed() / 255.0F, spark.getGreen() / 255.0F, spark.getBlue() / 255.0F);
@@ -83,7 +84,7 @@ public class CircleTintParticle extends SpriteTexturedParticle {
 
     @Nonnull
     @Override
-    public IParticleRenderType getRenderType() {
+    public ParticleRenderType getRenderType() {
         return RENDERER;
     }
 

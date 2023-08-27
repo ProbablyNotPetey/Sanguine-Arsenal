@@ -20,42 +20,42 @@ A small addon for the Eidolon mod
 [[dependencies.sanguinearsenal]]
     modId="minecraft"
     mandatory=true
-    versionRange="[1.16.5,1.17)"
+    versionRange="[1.19.2,)"
     ordering="NONE"
     side="BOTH"
 [[dependencies.sanguinearsenal]]
     modId = "eidolon"
     mandatory = true
-    versionRange = "[0.2.7]"
+    versionRange = "[0.3.0,)"
     ordering = "NONE"
     side = "BOTH"
 [[dependencies.sanguinearsenal]]
 modId = "curios"
 mandatory = true
-versionRange = "[1.16.5-4.0.8.1,)"
+versionRange = "[1.19.2-5.1.1.0,)"
 ordering = "NONE"
 side = "BOTH"
 
 #optional
 
-[[dependencies.sanguinearsenal]]
-modId = "atum"
-mandatory = false
-versionRange = "[1.16.5-2.2.8,)"
-ordering = "AFTER"
-side = "BOTH"
+#[[dependencies.sanguinearsenal]]
+#modId = "atum"
+#mandatory = false
+#versionRange = "[1.16.5-2.2.8,)"
+#ordering = "AFTER"
+#side = "BOTH"
 
 [[dependencies.sanguinearsenal]]
 modId = "twilightforest"
 mandatory = false
-versionRange = "[1.16.5-4.0.546,)"
+versionRange = "[1.19.2-4.2.1468,)"
 ordering = "AFTER"
 side = "BOTH"
 
 [[dependencies.sanguinearsenal]]
 modId = "classicbar"
 mandatory = false
-versionRange = "[4.1.0-1.16.5,)"
+versionRange = "[6-1.19.2,)"
 ordering = "AFTER"
 side = "BOTH"
 

@@ -1,10 +1,10 @@
 package com.decursioteam.sanguinearsenal.core.network.messages;
 
 import com.decursioteam.sanguinearsenal.core.network.ClientPacketHandler;
-import net.minecraft.network.PacketBuffer;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.fml.DistExecutor;
-import net.minecraftforge.fml.network.NetworkEvent;
+import net.minecraftforge.network.NetworkEvent;
 
 import java.util.function.Supplier;
 
@@ -16,11 +16,11 @@ public class BloodAuraMessage {
         this.bloodAura = bloodAmount;
     }
 
-    public BloodAuraMessage(PacketBuffer buffer) {
+    public BloodAuraMessage(FriendlyByteBuf buffer) {
         bloodAura = buffer.readBoolean();
     }
 
-    public static void encode(BloodAuraMessage message, PacketBuffer buffer) {
+    public static void encode(BloodAuraMessage message, FriendlyByteBuf buffer) {
         buffer.writeBoolean(message.bloodAura);
     }
 

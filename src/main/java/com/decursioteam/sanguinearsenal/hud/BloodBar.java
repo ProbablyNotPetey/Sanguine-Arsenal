@@ -1,17 +1,18 @@
 package com.decursioteam.sanguinearsenal.hud;
 
 import com.decursioteam.sanguinearsenal.SanguineArsenal;
-import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.AbstractGui;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.client.gui.GuiComponent;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.client.event.RenderGameOverlayEvent;
-import net.minecraftforge.client.gui.ForgeIngameGui;
+import net.minecraftforge.client.event.RenderGuiOverlayEvent;
+import net.minecraftforge.client.gui.overlay.ForgeGui;
+import net.minecraftforge.client.gui.overlay.IGuiOverlay;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModList;
 
@@ -20,34 +21,39 @@ import java.util.List;
 
 import static com.decursioteam.sanguinearsenal.core.Util.BloodUtil.getBloodAmount;
 import static com.decursioteam.sanguinearsenal.core.Util.LivingUtil.hasFullSPSet;
-import static net.minecraft.client.gui.AbstractGui.GUI_ICONS_LOCATION;
+import static net.minecraft.client.gui.Gui.GUI_ICONS_LOCATION;
 
 public class BloodBar {
     private static final Minecraft mc = Minecraft.getInstance();
     static Index[] indexes;
-    private final ResourceLocation TEXTURE = new ResourceLocation(SanguineArsenal.MOD_ID, "textures/gui/blood_bar.png");
-    private final List<Integer> colors = new ArrayList<>();
+    private static final ResourceLocation TEXTURE = new ResourceLocation(SanguineArsenal.MOD_ID, "textures/gui/blood_bar.png");
 
-    public static void blit(MatrixStack stack, int x, int y, float u, float v, int width, int height) {
+
+    public static void blit(PoseStack stack, int x, int y, float u, float v, int width, int height) {
         blit(stack, x, y, 0, u, v, width, height, 9, 27);
     }
 
-    public static void blit(MatrixStack stack, int x, int y, int z, float u, float v, int width, int height, int textureX, int textureY) {
-        AbstractGui.blit(stack, x, y, z, u, v, width, height, textureX, textureY);
+    public static void blit(PoseStack stack, int x, int y, int z, float u, float v, int width, int height, int textureX, int textureY) {
+        GuiComponent.blit(stack, x, y, z, u, v, width, height, textureX, textureY);
     }
 
-    @SubscribeEvent()
-    @OnlyIn(Dist.CLIENT)
-    public void onRenderBloodBarEvent(RenderGameOverlayEvent.Post event) {
-        if(mc.getCurrentServer() == null && !mc.hasSingleplayerServer()) return;
-        if(!ModList.get().isLoaded("classicbar")) {
-            if (event.getType() == RenderGameOverlayEvent.ElementType.FOOD) {
+    public static final IGuiOverlay BLOOD_BAR = (new IGuiOverlay() {
+
+        private final List<Integer> colors = new ArrayList<>();
+        @Override
+        public void render(ForgeGui gui, PoseStack poseStack, float partialTick, int screenWidth, int screenHeight) {
+//        int x = screenWidth / 2;
+//        int y = screenHeight;
+
+            if (mc.getCurrentServer() == null && !mc.hasSingleplayerServer()) return;
+            if (!ModList.get().isLoaded("classicbar")) {
+
                 if (mc.getCameraEntity() instanceof LivingEntity) {
                     LivingEntity viewEntity = (LivingEntity) mc.getCameraEntity();
-                    if(!(viewEntity instanceof PlayerEntity)) return;
-                    if (hasFullSPSet((PlayerEntity) viewEntity)) {
+                    if (!(viewEntity instanceof Player)) return;
+                    if (hasFullSPSet((Player) viewEntity)) {
 
-                        int storedBlood = getBloodAmount((PlayerEntity) viewEntity, true);
+                        int storedBlood = getBloodAmount((Player) viewEntity, true);
 
                         if (colors.isEmpty()) colors.add(0xffffff);
                         calculateIndex(storedBlood);
@@ -55,74 +61,136 @@ public class BloodBar {
                         int color = getColor(layer);
 
                         RenderSystem.enableBlend();
-                        RenderSystem.pushMatrix();
+                        poseStack.pushPose();
 
-                        int top = mc.getWindow().getGuiScaledHeight() - ForgeIngameGui.right_height;
-                        int right = mc.getWindow().getGuiScaledWidth() / 2 + 82;
-                        mc.getTextureManager().bind(TEXTURE);
+//                        int top = mc.getWindow().getGuiScaledHeight() - 39;
+                        int top = screenHeight - 39;
+
+//                        int right = mc.getWindow().getGuiScaledWidth() / 2 + 82;
+                        int right = screenWidth / 2 + 82;
+                        mc.getTextureManager().bindForSetup(TEXTURE);
                         for (int i = 0; i < 10; i++) {
                             Index index = indexes[i];
-                            MatrixStack stack = event.getMatrixStack();
-
                             if (layer >= 0)
                                 switch (index) {
                                     case empty:
-                                        drawEmptyIcon(stack, color, i, right, top);
+                                        drawEmptyIcon(poseStack, color, i, right, top);
                                         break;
                                     case half:
-                                        drawHalfIcon(stack, color, i, right, top);
+                                        drawHalfIcon(poseStack, color, i, right, top);
                                         break;
                                     case full:
-                                        drawFullIcon(stack, color, i, right, top);
+                                        drawFullIcon(poseStack, color, i, right, top);
                                         break;
                                 }
                         }
-                        ForgeIngameGui.right_height += 10;
-                        RenderSystem.popMatrix();
-                        mc.getTextureManager().bind(GUI_ICONS_LOCATION);
+//                        ForgeIngameGui.right_height += 10;
+                        poseStack.popPose();
+                        mc.getTextureManager().bindForSetup(GUI_ICONS_LOCATION);
                         RenderSystem.disableBlend();
                     }
                 }
             }
         }
-    }
 
-    void calculateIndex(int storedBlood) {
-        indexes = new Index[]{Index.empty, Index.empty, Index.empty, Index.empty, Index.empty, Index.empty, Index.empty, Index.empty, Index.empty, Index.empty};
-        int modulo = storedBlood % 20;
-        if (modulo == 0) {
-            indexes = new Index[]{Index.full, Index.full, Index.full, Index.full, Index.full, Index.full, Index.full, Index.full, Index.full, Index.full};
-            return;
+        void calculateIndex(int storedBlood) {
+            indexes = new Index[]{Index.empty, Index.empty, Index.empty, Index.empty, Index.empty, Index.empty, Index.empty, Index.empty, Index.empty, Index.empty};
+            int modulo = storedBlood % 20;
+            if (modulo == 0) {
+                indexes = new Index[]{Index.full, Index.full, Index.full, Index.full, Index.full, Index.full, Index.full, Index.full, Index.full, Index.full};
+                return;
+            }
+            int fullicons = modulo / 2;
+            boolean halficon = storedBlood % 2 == 1;
+            for (int i = 0; i < fullicons; i++) {
+                indexes[i] = Index.full;
+            }
+            if (halficon) {
+                indexes[fullicons] = Index.half;
+            }
         }
-        int fullicons = modulo / 2;
-        boolean halficon = storedBlood % 2 == 1;
-        for (int i = 0; i < fullicons; i++) {
-            indexes[i] = Index.full;
+
+        private int getColor(int index) {
+            return index < 0 ? 0xffffff : index >= colors.size() ? colors.get(colors.size() - 1) : colors.get(index);
         }
-        if (halficon) {
-            indexes[fullicons] = Index.half;
+
+        private void drawEmptyIcon(PoseStack stack, int color, int i, int guiLeft, int guiTop) {
+            RenderSystem.setShaderColor((color >> 16 & 0xff) / 256f, (color >> 8 & 0xff) / 256f, (color & 0xff) / 256f, 1.0f);
+            blit(stack, guiLeft - i * 8, guiTop, 18, 27, 9, 9);
         }
-    }
 
-    private int getColor(int index) {
-        return index < 0 ? 0xffffff : index >= colors.size() ? colors.get(colors.size() - 1) : colors.get(index);
-    }
+        private void drawFullIcon(PoseStack stack, int color, int i, int guiLeft, int guiTop) {
+            RenderSystem.setShaderColor((color >> 16 & 0xff) / 256f, (color >> 8 & 0xff) / 256f, (color & 0xff) / 256f, 1.0f);
+            blit(stack, guiLeft - i * 8, guiTop, 9, 18, 9, 9);
+        }
 
-    private void drawEmptyIcon(MatrixStack stack, int color, int i, int guiLeft, int guiTop) {
-        RenderSystem.color3f((color >> 16 & 0xff) / 256f, (color >> 8 & 0xff) / 256f, (color & 0xff) / 256f);
-        blit(stack, guiLeft - i * 8, guiTop, 18, 27, 9, 9);
-    }
+        private void drawHalfIcon(PoseStack stack, int color, int i, int guiLeft, int guiTop) {
+            RenderSystem.setShaderColor((color >> 16 & 0xff) / 256f, (color >> 8 & 0xff) / 256f, (color & 0xff) / 256f, 1.0f);
+            drawEmptyIcon(stack, color, i, guiLeft, guiTop);
+            blit(stack, guiLeft - i * 8, guiTop, 0, 9, 9, 9);
+        }
 
-    private void drawFullIcon(MatrixStack stack, int color, int i, int guiLeft, int guiTop) {
-        RenderSystem.color3f((color >> 16 & 0xff) / 256f, (color >> 8 & 0xff) / 256f, (color & 0xff) / 256f);
-        blit(stack, guiLeft - i * 8, guiTop, 9, 18, 9, 9);
-    }
+    });
 
-    private void drawHalfIcon(MatrixStack stack, int color, int i, int guiLeft, int guiTop) {
-        RenderSystem.color3f((color >> 16 & 0xff) / 256f, (color >> 8 & 0xff) / 256f, (color & 0xff) / 256f);
-        drawEmptyIcon(stack, color, i, guiLeft, guiTop);
-        blit(stack, guiLeft - i * 8, guiTop, 0, 9, 9, 9);
-    }
+
+
+
+
+
+//    @SubscribeEvent()
+//    @OnlyIn(Dist.CLIENT)
+//    public void onRenderBloodBarEvent(RenderGuiOverlayEvent.Post event) {
+//        if(mc.getCurrentServer() == null && !mc.hasSingleplayerServer()) return;
+//        if(!ModList.get().isLoaded("classicbar")) {
+//            PoseStack poseStack = event.getPoseStack();
+//
+//            if (event.getType() == RenderGuiOverlayEvent.ElementType.FOOD) {
+//                if (mc.getCameraEntity() instanceof LivingEntity) {
+//                    LivingEntity viewEntity = (LivingEntity) mc.getCameraEntity();
+//                    if(!(viewEntity instanceof Player) ) return;
+//                    if (hasFullSPSet((Player) viewEntity)) {
+//
+//                        int storedBlood = getBloodAmount((Player) viewEntity, true);
+//
+//                        if (colors.isEmpty()) colors.add(0xffffff);
+//                        calculateIndex(storedBlood);
+//                        int layer = (int) Math.ceil(storedBlood / 20d) - 1;
+//                        int color = getColor(layer);
+//
+//                        RenderSystem.enableBlend();
+//                        poseStack.pushPose();
+//
+//                        int top = mc.getWindow().getGuiScaledHeight() - ForgeIngameGui.right_height;
+//                        int right = mc.getWindow().getGuiScaledWidth() / 2 + 82;
+//                        mc.getTextureManager().bind(TEXTURE);
+//                        for (int i = 0; i < 10; i++) {
+//                            Index index = indexes[i];
+//                            PoseStack stack = event.getPoseStack();
+//
+//                            if (layer >= 0)
+//                                switch (index) {
+//                                    case empty:
+//                                        drawEmptyIcon(stack, color, i, right, top);
+//                                        break;
+//                                    case half:
+//                                        drawHalfIcon(stack, color, i, right, top);
+//                                        break;
+//                                    case full:
+//                                        drawFullIcon(stack, color, i, right, top);
+//                                        break;
+//                                }
+//                        }
+//                        ForgeIngameGui.right_height += 10;
+//                        poseStack.popPose();
+//                        mc.getTextureManager().bind(GUI_ICONS_LOCATION);
+//                        RenderSystem.disableBlend();
+//                    }
+//                }
+//            }
+//        }
+//    }
+
+
 
     enum Index {
         half, full, empty

@@ -2,14 +2,17 @@ buildscript {
     repositories {
         maven { url = 'https://maven.minecraftforge.net' }
         maven { url = 'https://repo.spongepowered.org/repository/maven-public/' }
+        maven { url = 'https://maven.parchmentmc.org' }
         mavenCentral()
     }
     dependencies {
         classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.1.+', changing: true
+        classpath 'org.parchmentmc:librarian:1.+'
         classpath 'org.spongepowered:mixingradle:0.7-SNAPSHOT'
     }
 }
 apply plugin: 'net.minecraftforge.gradle'
+apply plugin: 'org.parchmentmc.librarian.forgegradle'
 apply plugin: 'org.spongepowered.mixin'
 
 group = group
@@ -17,11 +20,11 @@ version = mod_version
 
 java {
     archivesBaseName = mod_id
-    toolchain.languageVersion = JavaLanguageVersion.of(8)
+    toolchain.languageVersion = JavaLanguageVersion.of(17)
 }
 
 minecraft {
-    mappings channel: 'official', version: '1.16.5'
+    mappings channel: 'parchment', version: "2022.11.27-${mc_version}"
 
     runs {
         client {
@@ -74,28 +77,43 @@ repositories {
     maven {
         url "https://cursemaven.com"
     }
+
+    maven {
+        url = "https://maven.theillusivec4.top/"
+    }
+
+    maven {
+        name = "Jared's maven"
+        url = "https://maven.blamejared.com/"
+    }
 }
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.16.5-36.2.33'
+    minecraft "net.minecraftforge:forge:${mc_version}-${forge_version}"
     // Dependencies
-    compileOnly fg.deobf("curse.maven:curios-309927:3661903")
-    runtimeOnly fg.deobf("curse.maven:curios-309927:3661903")
-    implementation fg.deobf("curse.maven:eidolon-429625:3157832")
+    runtimeOnly fg.deobf("top.theillusivec4.curios:curios-forge:${mc_version}-${curios_version}")
+    compileOnly fg.deobf("top.theillusivec4.curios:curios-forge:${mc_version}-${curios_version}:api")
+//    compileOnly fg.deobf("curse.maven:curios-309927:3661903")
+//    runtimeOnly fg.deobf("curse.maven:curios-309927:3661903")
+    implementation fg.deobf("curse.maven:eidolon-rebrewed-665468:4721269")
 
     // Testing
     //implementation fg.deobf("curse.maven:hexblades-528079:3528648")
     //implementation fg.deobf("curse.maven:classicbars-317642:3240083")
-    implementation fg.deobf("curse.maven:atum2-59621:3469295")
-    implementation fg.deobf("curse.maven:twilightforest-227639:3413560")
+//    implementation fg.deobf("curse.maven:atum2-59621:3469295")
+    implementation fg.deobf("curse.maven:twilightforest-227639:4389567")
 
     // Just JEI
-    implementation fg.deobf("curse.maven:jei-238222:3488178")
+    compileOnly fg.deobf("mezz.jei:jei-${mc_version}-common-api:${jei_version}")
+    compileOnly fg.deobf("mezz.jei:jei-${mc_version}-forge-api:${jei_version}")
+    // at runtime, use the full JEI
+    runtimeOnly fg.deobf("mezz.jei:jei-${mc_version}-common:${jei_version}")
+    runtimeOnly fg.deobf("mezz.jei:jei-${mc_version}-forge:${jei_version}")
 
     // Compatibility
-    compileOnly fg.deobf("curse.maven:classicbars-317642:3240083")
-    compileOnly fg.deobf("curse.maven:twilightforest-227639:3413560")
-    compileOnly fg.deobf("curse.maven:atum2-59621:3469295")
+//    compileOnly fg.deobf("curse.maven:classicbars-317642:3240083")
+//    compileOnly fg.deobf("curse.maven:twilightforest-227639:3413560")
+//    compileOnly fg.deobf("curse.maven:atum2-59621:3469295")
 
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 }

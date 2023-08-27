@@ -5,23 +5,23 @@ import com.decursioteam.sanguinearsenal.core.Util.Keys;
 import com.decursioteam.sanguinearsenal.entities.FlyingScytheEntity;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.attributes.Attribute;
-import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.item.ArmorStandEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.stats.Stats;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.Hand;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.world.World;
+import net.minecraft.util.Mth;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.decoration.ArmorStand;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 
 import static com.decursioteam.sanguinearsenal.core.Util.BloodUtil.getBloodAmount;
 import static com.decursioteam.sanguinearsenal.core.Util.BloodUtil.removeBlood;
@@ -44,28 +44,28 @@ public class PraetorScythe extends Item {
     }
 
     @Override
-    public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlotType slot, ItemStack stack) {
+    public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlot slot, ItemStack stack) {
         ImmutableMultimap.Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
         builder.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(Item.BASE_ATTACK_DAMAGE_UUID, "Weapon modifier", SangArsConfig.COMMON.praetorScytheMeleeDamage.get(), AttributeModifier.Operation.ADDITION));
         builder.put(Attributes.ATTACK_SPEED, new AttributeModifier(Item.BASE_ATTACK_SPEED_UUID, "Weapon modifier", SangArsConfig.COMMON.praetorScytheAttackSpeed.get(), AttributeModifier.Operation.ADDITION));
         Multimap<Attribute, AttributeModifier> defaultModifiers = builder.build();
-        return slot == EquipmentSlotType.MAINHAND ? defaultModifiers : super.getDefaultAttributeModifiers(slot);
+        return slot == EquipmentSlot.MAINHAND ? defaultModifiers : super.getDefaultAttributeModifiers(slot);
     }
 
     @Override
-    public ActionResult<ItemStack> use(World world, PlayerEntity playerEntity, Hand handIn) {
+    public InteractionResultHolder<ItemStack> use(Level world, Player playerEntity, InteractionHand handIn) {
         ItemStack stack = playerEntity.getItemInHand(handIn);
-        EquipmentSlotType hand;
+        EquipmentSlot hand;
         if(!hasFullSPSet(playerEntity)) playerEntity.displayClientMessage(Keys.NO_PRAETOR_ARMOR, true);
-        if (!world.isClientSide() && hasFullSPSet(playerEntity)) {
+        if (!world.isClientSide && hasFullSPSet(playerEntity)) {
             if(!playerEntity.isCreative() && getBloodAmount(playerEntity, false) < SangArsConfig.COMMON.praetorScytheThrowValue.get()) {
                 playerEntity.displayClientMessage(Keys.NOT_ENOUGH_BLOOD, true);
-                return ActionResult.fail(stack);
+                return InteractionResultHolder.fail(stack);
             }
             if(!playerEntity.isCreative()) removeBlood(playerEntity, SangArsConfig.COMMON.praetorScytheThrowValue.get());
 
-            if(handIn == Hand.OFF_HAND) hand = EquipmentSlotType.OFFHAND;
-            else hand = EquipmentSlotType.MAINHAND;
+            if(handIn == InteractionHand.OFF_HAND) hand = EquipmentSlot.OFFHAND;
+            else hand = EquipmentSlot.MAINHAND;
 
 
             playerEntity.setItemSlot(hand, ItemStack.EMPTY);
@@ -73,14 +73,14 @@ public class PraetorScythe extends Item {
             float multiplier = 1.2f;
             double damage = 1.0F + baseDamage * multiplier;
 
-            int slot = playerEntity.inventory.selected;
+            int slot = playerEntity.getInventory().selected;
             FlyingScytheEntity entity = new FlyingScytheEntity(world);
             entity.setPos(playerEntity.getX(), playerEntity.getY() + playerEntity.getBbHeight() / 2f, playerEntity.getZ());
 
             entity.setData((float) damage, playerEntity.getUUID(), slot, stack);
             entity.getEntityData().set(FlyingScytheEntity.SCYTHE, stack);
 
-            entity.shootFromRotation(playerEntity, playerEntity.xRot, playerEntity.yRot, 0.0F, 1.5F + 0 * 0.125f, 0F);
+            entity.shootFromRotation(playerEntity, playerEntity.getXRot(), playerEntity.getYRot(), 0.0F, 1.5F + 0 * 0.125f, 0F);
             world.addFreshEntity(entity);
         }
         playerEntity.awardStat(Stats.ITEM_USED.get(stack.getItem()));
@@ -89,13 +89,13 @@ public class PraetorScythe extends Item {
 
 
     @Override
-    public boolean onLeftClickEntity(ItemStack stack, PlayerEntity attacker, Entity target) {
+    public boolean onLeftClickEntity(ItemStack stack, Player attacker, Entity target) {
         if(target instanceof LivingEntity){
             float damage = (float)attacker.getAttributeValue(Attributes.ATTACK_DAMAGE);
 
             for(LivingEntity livingentity : attacker.level.getEntitiesOfClass(LivingEntity.class, target.getBoundingBox().inflate(1.0D, 0.25D, 1.0D))) {
-                if (livingentity != attacker && livingentity != target && !attacker.isAlliedTo(livingentity) && (!(livingentity instanceof ArmorStandEntity) || !((ArmorStandEntity)livingentity).isMarker()) && attacker.distanceToSqr(livingentity) < 9.0D) {
-                    livingentity.knockback(0.4F, MathHelper.sin(attacker.yRot * ((float)Math.PI / 180F)), -MathHelper.cos(attacker.yRot * ((float)Math.PI / 180F)));
+                if (livingentity != attacker && livingentity != target && !attacker.isAlliedTo(livingentity) && (!(livingentity instanceof ArmorStand) || !((ArmorStand)livingentity).isMarker()) && attacker.distanceToSqr(livingentity) < 9.0D) {
+                    livingentity.knockback(0.4F, Mth.sin(attacker.getYRot() * ((float)Math.PI / 180F)), -Mth.cos(attacker.getYRot() * ((float)Math.PI / 180F)));
                     livingentity.hurt(DamageSource.playerAttack(attacker), damage);
                 }
             }

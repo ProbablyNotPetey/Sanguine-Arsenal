@@ -1,5 +1,5 @@
 package com.decursioteam.sanguinearsenal.recipes.spells;
-
+/*
 import com.decursioteam.sanguinearsenal.core.init.ItemInit;
 import elucent.eidolon.Registry;
 import elucent.eidolon.capability.ReputationProvider;
@@ -81,3 +81,5 @@ public class SanguineTouchSpell extends StaticSpell {
         return stack;
     }
 }
+
+ */

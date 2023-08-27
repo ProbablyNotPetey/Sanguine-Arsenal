@@ -3,31 +3,28 @@ package com.decursioteam.sanguinearsenal.core.init;
 import com.decursioteam.sanguinearsenal.SanguineArsenal;
 import com.decursioteam.sanguinearsenal.entities.FlyingScytheEntity;
 import com.decursioteam.sanguinearsenal.items.scepterofblood.BloodProjectileEntity;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityClassification;
-import net.minecraft.entity.EntityType;
-import net.minecraftforge.fml.RegistryObject;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.MobCategory;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegistryObject;
 
 public class EntityInit {
-    public static final DeferredRegister<EntityType<?>> ENTITIES = DeferredRegister.create(ForgeRegistries.ENTITIES, SanguineArsenal.MOD_ID);
+    public static final DeferredRegister<EntityType<?>> ENTITIES = DeferredRegister.create(ForgeRegistries.ENTITY_TYPES, SanguineArsenal.MOD_ID);
 
-    public static final RegistryObject<EntityType<FlyingScytheEntity>> FLYING_SCYTHE = addEntity("flying_scythe", 2.5F, 0.75F, 10, (e, w)-> new FlyingScytheEntity(w));
-    public static final RegistryObject<EntityType<BloodProjectileEntity>> BLOOD_PROJECTILE = addEntity("blood_projectile", 0.4f, 0.4f, 64, BloodProjectileEntity::new);
+    public static final RegistryObject<EntityType<FlyingScytheEntity>> FLYING_SCYTHE = ENTITIES.register("flying_scythe", () -> addEntity("flying_scythe", 2.5F, 0.75F, 10, (e, w)-> new FlyingScytheEntity(w)));
+    public static final RegistryObject<EntityType<BloodProjectileEntity>> BLOOD_PROJECTILE = ENTITIES.register("blood_projectile", () -> addEntity("blood_projectile", 0.4f, 0.4f, 64, BloodProjectileEntity::new));
 
-    static <T extends Entity> RegistryObject<EntityType<T>> addEntity(String name, float width, float height, int trackingRange, EntityType.IFactory<T> factory) {
-        EntityType<T> type = EntityType.Builder.of(factory, EntityClassification.MISC)
+    private static <T extends Entity> EntityType<T> addEntity(String name, float width, float height, int trackingRange, EntityType.EntityFactory<T> factory) {
+        return EntityType.Builder.of(factory, MobCategory.MISC)
                 .setTrackingRange(trackingRange)
                 .setUpdateInterval(1)
                 .sized(width, height)
                 .build(SanguineArsenal.MOD_ID + ":" + name);
-        return ENTITIES.register(name, () -> type);
+
     }
 
-    public static void init() {
-        ENTITIES.register(FMLJavaModLoadingContext.get().getModEventBus());
-    }
 
 }

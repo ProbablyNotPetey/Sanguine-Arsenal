@@ -7,15 +7,15 @@ import elucent.eidolon.Registry;
 import elucent.eidolon.codex.*;
 import elucent.eidolon.spell.Signs;
 import elucent.eidolon.util.ColorUtil;
-import net.minecraft.block.Blocks;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.potion.PotionUtils;
-import net.minecraft.potion.Potions;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.alchemy.PotionUtils;
+import net.minecraft.world.item.alchemy.Potions;
+import net.minecraft.world.level.block.Blocks;
 
 import java.util.List;
 
-import static net.minecraftforge.fml.common.ObfuscationReflectionHelper.getPrivateValue;
+import static net.minecraftforge.fml.util.ObfuscationReflectionHelper.getPrivateValue;
 
 public class ArsEclesiaCodex {
 

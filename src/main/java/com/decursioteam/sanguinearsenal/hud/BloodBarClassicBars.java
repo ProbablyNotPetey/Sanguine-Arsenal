@@ -1,6 +1,6 @@
 package com.decursioteam.sanguinearsenal.hud;
 
-
+/*
 import com.decursioteam.sanguinearsenal.SanguineArsenal;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -103,3 +103,5 @@ public class BloodBarClassicBars implements BarOverlay {
         return "bloodaura";
     }
 }
+
+ */

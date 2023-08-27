@@ -1,8 +1,8 @@
 package com.decursioteam.sanguinearsenal.items.curios.bloodflask;
 
 import com.decursioteam.sanguinearsenal.core.init.SangArsItemGroup;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 
 public abstract class BloodFlask extends Item {
 

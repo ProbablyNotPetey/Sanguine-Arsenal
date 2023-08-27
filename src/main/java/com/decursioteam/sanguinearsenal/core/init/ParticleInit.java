@@ -4,12 +4,14 @@ import com.decursioteam.sanguinearsenal.SanguineArsenal;
 import com.decursioteam.sanguinearsenal.core.particles.circle.CircleTintData;
 import com.decursioteam.sanguinearsenal.core.particles.circle.CircleTintFactory;
 import net.minecraft.client.Minecraft;
-import net.minecraft.particles.ParticleType;
+import net.minecraft.core.particles.ParticleType;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.ParticleFactoryRegisterEvent;
-import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.client.event.RegisterParticleProvidersEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegisterEvent;
 
 public class ParticleInit {
 
@@ -18,18 +20,18 @@ public class ParticleInit {
     @Mod.EventBusSubscriber(modid = SanguineArsenal.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
     public static class ClientParticleRegistry {
         @SubscribeEvent
-        public static void onParticleFactoryRegistration(ParticleFactoryRegisterEvent event) {
-            Minecraft.getInstance().particleEngine.register(CIRCLE_TINT, CircleTintFactory::new);
+        public static void onParticleFactoryRegistration(RegisterParticleProvidersEvent event) {
+            event.register(CIRCLE_TINT, CircleTintFactory::new);
         }
     }
 
     @Mod.EventBusSubscriber(modid = SanguineArsenal.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
     public static class ServerParticleRegistry {
         @SubscribeEvent
-        public static void onParticleTypeRegistration(RegistryEvent.Register<ParticleType<?>> event) {
+        public static void onParticleTypeRegistration(final RegisterEvent event) {
             CIRCLE_TINT = new CircleTintFactory.CircleTintType();
-            CIRCLE_TINT.setRegistryName(SanguineArsenal.MOD_ID + ":" + "circle_tint");
-            event.getRegistry().register(CIRCLE_TINT);
+            event.register(ForgeRegistries.Keys.PARTICLE_TYPES,
+                    helper -> helper.register(new ResourceLocation(SanguineArsenal.MOD_ID, "circle_tint"), CIRCLE_TINT));
         }
     }
 }
