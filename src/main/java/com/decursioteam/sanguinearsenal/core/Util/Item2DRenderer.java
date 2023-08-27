@@ -29,14 +29,14 @@ import net.minecraftforge.registries.ForgeRegistries;
 import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Map;
-
+/*
 @OnlyIn(Dist.CLIENT)
 public class Item2DRenderer {
-    public static final String[] HAND_MODEL_ITEMS = new String[]{"scepter_of_blood", "praetor_scythe"};
+
 
     @SubscribeEvent
     public static void onModelBakeEvent(ModelEvent.BakingCompleted event) {
-        /*
+
 
         Map<ResourceLocation, BakedModel> map = event.getModels();
         for (String item : HAND_MODEL_ITEMS) {
@@ -81,7 +81,6 @@ public class Item2DRenderer {
                     return bakedModelDefault.getOverrides();
                 }
 
-                //todo : is this needed?
 //                @Override
 //                public BakedModel handlePerspective(ItemTransforms.TransformType cameraTransformType, PoseStack mat) {
 //                    BakedModel modelToUse = bakedModelDefault;
@@ -97,7 +96,7 @@ public class Item2DRenderer {
 
         }
 
-         */
+
     }
 
 
@@ -112,3 +111,4 @@ public class Item2DRenderer {
     }
 
 }
+*/

@@ -14,6 +14,9 @@ import top.theillusivec4.curios.api.client.CuriosRendererRegistry;
 
 public class ModelInit {
 
+
+    public static final String[] HAND_MODEL_ITEMS = new String[]{"scepter_of_blood", "praetor_scythe"};
+
     public static final ModelLayerLocation
             SP_ARMOR_LAYER = new ModelLayerLocation(new ResourceLocation(SanguineArsenal.MOD_ID, "sp_armor"), "main"),
             BLOOD_FLASK_LAYER = new ModelLayerLocation(new ResourceLocation(SanguineArsenal.MOD_ID, "blood_flask"), "main");

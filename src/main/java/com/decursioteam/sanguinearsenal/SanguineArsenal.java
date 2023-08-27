@@ -3,7 +3,6 @@ package com.decursioteam.sanguinearsenal;
 import com.decursioteam.sanguinearsenal.core.SangArsConfig;
 import com.decursioteam.sanguinearsenal.core.SangArsSpells;
 import com.decursioteam.sanguinearsenal.core.Util.Events;
-import com.decursioteam.sanguinearsenal.core.Util.Item2DRenderer;
 import com.decursioteam.sanguinearsenal.core.codex.ArsEclesiaCodex;
 import com.decursioteam.sanguinearsenal.core.init.*;
 import com.decursioteam.sanguinearsenal.core.network.Network;
@@ -66,7 +65,6 @@ public class SanguineArsenal {
             //todo : what is this for?
 //            ModLoadingContext.get().registerExtensionPoint(IExtensionPoint.DisplayTest.class, () -> Pair.of(() -> NetworkConstants.IGNORESERVERONLY, (a, b) -> true));
 
-            bus.register(Item2DRenderer.class);
             bus.addListener(this::init);
 
 
@@ -118,7 +116,7 @@ public class SanguineArsenal {
 
     // todo: fix
     private void init(ModelEvent.RegisterAdditional modelRegistryEvent) {
-        for (String item : Item2DRenderer.HAND_MODEL_ITEMS) {
+        for (String item : ModelInit.HAND_MODEL_ITEMS) {
 //            ModelLoader.addSpecialModel(new ModelResourceLocation(SanguineArsenal.MOD_ID + ":" + item + "_in_hand", "inventory"));
             modelRegistryEvent.register(new ModelResourceLocation(SanguineArsenal.MOD_ID + ":" + item + "_in_hand", "inventory"));
         }
