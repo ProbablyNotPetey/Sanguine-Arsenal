@@ -1,6 +1,7 @@
 package com.decursioteam.sanguinearsenal.items.scepterofblood;
 
 import com.decursioteam.sanguinearsenal.core.SangArsConfig;
+import com.decursioteam.sanguinearsenal.core.Util.Item3D;
 import com.decursioteam.sanguinearsenal.core.Util.Keys;
 import com.decursioteam.sanguinearsenal.core.init.EntityInit;
 import com.google.common.collect.ImmutableMultimap;
@@ -31,7 +32,7 @@ import net.minecraft.world.level.Level;
 import static com.decursioteam.sanguinearsenal.core.Util.BloodUtil.*;
 import static com.decursioteam.sanguinearsenal.core.Util.LivingUtil.hasFullSPSet;
 
-public class ScepterOfBloodItem extends Item {
+public class ScepterOfBloodItem extends Item implements Item3D {
 
     public ScepterOfBloodItem(Item.Properties props) {
         super(props);
