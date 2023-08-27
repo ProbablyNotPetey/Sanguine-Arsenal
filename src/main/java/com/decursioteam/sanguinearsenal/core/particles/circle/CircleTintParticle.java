@@ -30,7 +30,8 @@ public class CircleTintParticle extends TextureSheetParticle {
 //            RenderSystem.alphaFunc(GL11.GL_GREATER, 0.001F);
 //            RenderSystem.disableLighting();
 
-            textureManager.bindForSetup(TextureAtlas.LOCATION_PARTICLES);
+//            textureManager.bindForSetup(TextureAtlas.LOCATION_PARTICLES);
+            RenderSystem.setShaderTexture(0, TextureAtlas.LOCATION_PARTICLES);
             Objects.requireNonNull(textureManager.getTexture(TextureAtlas.LOCATION_PARTICLES)).setBlurMipmap(true, false);
             bufferBuilder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.PARTICLE);
         }

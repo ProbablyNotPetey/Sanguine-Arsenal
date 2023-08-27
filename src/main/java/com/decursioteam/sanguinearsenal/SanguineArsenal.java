@@ -52,6 +52,7 @@ public class SanguineArsenal {
         IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, SangArsConfig.COMMON_CONFIG);
         bus.addListener(this::setup);
+        ParticleInit.ServerParticleRegistry.init(bus);
         ItemInit.ITEMS.register(bus);
         BlockInit.BLOCKS.register(bus);
         EntityInit.ENTITIES.register(bus);

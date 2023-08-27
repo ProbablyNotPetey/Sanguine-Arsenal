@@ -119,7 +119,7 @@ public class CircleTintData implements ParticleOptions {
     @Nonnull
     @Override
     public ParticleType<CircleTintData> getType() {
-        return ParticleInit.CIRCLE_TINT;
+        return ParticleInit.ServerParticleRegistry.CIRCLE_TINT.get();
     }
 
     @Override
