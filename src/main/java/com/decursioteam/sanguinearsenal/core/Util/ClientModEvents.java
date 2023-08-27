@@ -41,6 +41,6 @@ public class ClientModEvents {
 
     @SubscribeEvent
     public static void registerGuiOverlays(RegisterGuiOverlaysEvent event) {
-        event.registerAboveAll("blood", BloodBar.BLOOD_BAR);
+        event.registerBelowAll("blood", BloodBar.BLOOD_BAR);
     }
 }

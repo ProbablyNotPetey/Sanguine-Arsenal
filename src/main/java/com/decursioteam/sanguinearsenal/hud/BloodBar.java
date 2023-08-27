@@ -54,6 +54,8 @@ public class BloodBar {
                     if (!(viewEntity instanceof Player)) return;
                     if (hasFullSPSet((Player) viewEntity)) {
 
+                        if(((Player) viewEntity).isCreative() || (viewEntity.isSpectator())) return;
+
                         int storedBlood = getBloodAmount((Player) viewEntity, true);
 
                         if (colors.isEmpty()) colors.add(0xffffff);
