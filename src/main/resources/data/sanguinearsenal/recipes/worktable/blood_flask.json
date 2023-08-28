@@ -1,0 +1,35 @@
+{
+    "type": "eidolon:worktable",
+    "pattern": [
+        " a ",
+        "lhl",
+        "olo"
+    ],
+    "reagents": "scgc",
+    "key": {
+        "c": {
+            "item": "eidolon:crimson_essence"
+        },
+        "l": {
+            "tag": "forge:glass"
+        },
+        "s": {
+            "item": "sanguinearsenal:sigil_of_the_dark_lord"
+        },
+        "g": {
+            "item": "sanguinearsenal:sanguine_crystal"
+        },
+        "h": {
+            "item": "sanguinearsenal:zombie_heart_stew"
+        },
+        "a": {
+            "item": "eidolon:gold_inlay"
+        },
+        "o": {
+            "item": "eidolon:shadow_gem"
+        }
+    },
+    "result": {
+        "item": "sanguinearsenal:blood_flask"
+    }
+}

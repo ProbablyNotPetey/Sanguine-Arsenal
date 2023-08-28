@@ -64,10 +64,10 @@ public class SPArmorItem extends ArmorItem {
                         if (world.getGameTime() % SangArsConfig.COMMON.bloodDrainSpeed.get() == 0) {
                             if (hasBloodFlask(playerEntity)) {
                                 removeBlood(playerEntity, SangArsConfig.COMMON.bloodDrainAmount.get());
-                                addEffects(world, playerEntity, SangArsConfig.COMMON.bloodAuraEffectMultiplier.get(), 61, true);
+                                addEffects(world, playerEntity, SangArsConfig.COMMON.bloodAuraEffectMultiplier.get(), 81, true);
                             } else {
                                 removeBlood(playerEntity, (SangArsConfig.COMMON.bloodDrainAmount.get() * SangArsConfig.COMMON.bloodUsageMultiplier.get()));
-                                addEffects(world, playerEntity, SangArsConfig.COMMON.bloodAuraEffectMultiplier.get() - 1, 61, true);
+                                addEffects(world, playerEntity, SangArsConfig.COMMON.bloodAuraEffectMultiplier.get() - 1, 81, true);
                             }
                         }
                     }
@@ -77,7 +77,7 @@ public class SPArmorItem extends ArmorItem {
                         Network.CHANNEL.sendTo(new ParticleMessage(), serverPlayer.connection.getConnection(), NetworkDirection.PLAY_TO_CLIENT);
                     }
                 }
-                addEffects(world, playerEntity, SangArsConfig.COMMON.praetorEffectMultiplier.get(), 61, SangArsConfig.COMMON.praetorArmorRegen.get());
+                addEffects(world, playerEntity, SangArsConfig.COMMON.praetorEffectMultiplier.get(), 81, false);
             }
         }
         super.onArmorTick(stack, world, playerEntity);

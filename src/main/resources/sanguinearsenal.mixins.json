@@ -5,8 +5,7 @@
   "refmap": "sanguinearsenal.mixin-refmap.json",
   "mixins": [
     "PlayerRendererMixin",
-    "SanguinePraetorEffects",
-    "ItemRendererMixin"
+    "SanguinePraetorEffects"
   ],
   "injectors": {
     "defaultRequire": 1

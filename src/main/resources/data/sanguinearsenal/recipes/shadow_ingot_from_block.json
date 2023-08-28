@@ -1,0 +1,13 @@
+{
+    "type": "minecraft:crafting_shapeless",
+    "group": "sanguinearsenal",
+    "ingredients": [
+        {
+            "item": "sanguinearsenal:shadow_block"
+        }
+    ],
+    "result": {
+        "item": "sanguinarsenal:shadow_ingot",
+        "count": 9
+    }
+}

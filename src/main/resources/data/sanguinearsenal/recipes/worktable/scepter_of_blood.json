@@ -1,0 +1,29 @@
+{
+    "type": "eidolon:worktable",
+    "pattern": [
+        " ig",
+        " wi",
+        "i  "
+    ],
+    "reagents": "sc c",
+    "key": {
+        "c": {
+            "item": "eidolon:crimson_essence"
+        },
+        "i": {
+            "item": "sanguinearsenal:shadow_ingot"
+        },
+        "s": {
+            "item": "sanguinearsenal:sigil_of_the_dark_lord"
+        },
+        "g": {
+            "item": "sanguinearsenal:sanguine_crystal"
+        },
+        "w": {
+            "item": "eidolon:soulfire_wand"
+        }
+    },
+    "result": {
+        "item": "sanguinearsenal:scepter_of_blood"
+    }
+}

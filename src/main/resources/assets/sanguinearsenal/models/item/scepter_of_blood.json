@@ -1,6 +1,15 @@
 {
-	"parent": "item/handheld",
-	"textures": {
-		"layer0": "sanguinearsenal:items/scepter_of_blood"
+	"parent": "forge:item/default",
+	"loader": "forge:separate_transforms",
+	"base": {
+		"parent": "sanguinearsenal:item/scepter_of_blood_in_hand"
+	},
+	"perspectives": {
+		"gui": {
+			"parent": "item/handheld",
+			"textures": {
+				"layer0": "sanguinearsenal:items/scepter_of_blood"
+			}
+		}
 	}
 }

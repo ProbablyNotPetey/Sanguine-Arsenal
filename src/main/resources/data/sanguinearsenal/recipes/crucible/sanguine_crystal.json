@@ -1,0 +1,33 @@
+{
+    "type": "eidolon:crucible",
+    "steps": [
+        {
+            "items": [
+                { "tag": "forge:storage_blocks/redstone" }
+            ]
+        },
+        {
+            "stirs": 1,
+            "items": [
+                { "item": "minecraft:ghast_tear" },
+                { "item": "eidolon:crimson_essence" }
+            ]
+        },
+        {
+            "stirs": 1,
+            "items": [
+                { "item": "eidolon:lesser_soul_gem" },
+                { "item": "eidolon:lesser_soul_gem" },
+                { "item": "eidolon:crimson_essence" }
+            ]
+        },
+        {
+            "items": [
+                { "item": "eidolon:shadow_gem" }
+            ]
+        }
+    ],
+    "result": {
+        "item": "sanguinearsenal:sanguine_crystal"
+    }
+}

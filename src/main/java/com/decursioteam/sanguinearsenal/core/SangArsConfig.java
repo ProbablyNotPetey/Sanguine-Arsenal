@@ -46,21 +46,21 @@ public class SangArsConfig {
             );
             COMMON_BUILDER.push("Blood System");
             aggressiveEntitiesBloodValue = COMMON_BUILDER
-                    .comment("Set the amount of blood that the player receives when he kills an aggressive entity.")
+                    .comment("Set the amount of blood that the player receives when they kill an aggressive entity.")
                     .defineInRange("aggressiveEntitiesBloodValue", 5, 0, 20);
             passiveEntitiesBloodValue = COMMON_BUILDER
-                    .comment("Set the amount of blood that the player receives when he kills a passive entity.")
+                    .comment("Set the amount of blood that the player receives when they kill a passive entity.")
                     .defineInRange("passiveEntitiesBloodValue", 5, 0, 20);
             otherEntitiesBloodValue = COMMON_BUILDER
-                    .comment("Set the amount of blood that the player receives when he kills an entity that doesn't have compatibily with the mod.")
+                    .comment("Set the amount of blood that the player receives when they kill an entity that doesn't have compatibily with the mod.")
                     .defineInRange("otherEntitiesBloodValue", 5, 0, 20);
             COMMON_BUILDER.pop();
             COMMON_BUILDER.push("Blood Aura");
             bloodAuraParticles = COMMON_BUILDER
-                    .comment("If this value is 'true', when a player activates his 'Blood Aura' he will be followed by 2 particles moving in a circle around him.")
+                    .comment("If this value is 'true', when a player activates 'Blood Aura' they will be followed by 2 particles moving in a circle around him.")
                     .define("bloodAuraParticles", true);
             bloodAuraEffects = COMMON_BUILDER
-                    .comment("If this value is 'true', when a player activates his 'Blood Aura' effects will be applied to him depending of the dimension he's in.")
+                    .comment("If this value is 'true', when a player activates 'Blood Aura' effects will be applied to him depending of the dimension he's in.")
                     .define("bloodAuraEffects", true);
             praetorEffectMultiplier = COMMON_BUILDER
                     .comment("Set the multiplier of the effects that a player receives when he's wearing the full set of Praetor Armor. ")
@@ -69,23 +69,23 @@ public class SangArsConfig {
                     .comment("Set the multiplier of the effects that a player receives when he's wearing the full set of Praetor Armor and a Blood Flask.")
                     .defineInRange("bloodFlaskEffectMultiplier", 1, 0, 100000);
             bloodAuraEffectMultiplier = COMMON_BUILDER
-                    .comment("Set the multiplier of the effects that a player receives when he has activated his 'Blood Aura'.")
-                    .defineInRange("bloodAuraEffectMultiplier", 2, 0, 100000);
+                    .comment("Set the multiplier of the effects that a player receives when they have activated 'Blood Aura'.")
+                    .defineInRange("bloodAuraEffectMultiplier", 3, 0, 100000);
             bloodDrainSpeed = COMMON_BUILDER
-                    .comment("Set how quickly the blood amount that the player has in his Sanguine Praetor Armor while wearing a Blood Flask goes down when he activates his 'Blood Aura'."
+                    .comment("Set how quickly the blood amount that the player has in their Sanguine Praetor Armor while wearing a Blood Flask goes down when they activate 'Blood Aura'."
                             , "This value represents ticks, 20 ticks = 1 second.")
                     .defineInRange("bloodDrainSpeed", 20, 20, 100000000);
             bloodUsageMultiplier = COMMON_BUILDER
-                    .comment("Set by how much should the blood consumption of the player should by multiplied when he doesn't wear a Blood Flask.")
+                    .comment("Set by how much should the blood consumption of the player should by multiplied when they doesn't wear a Blood Flask.")
                     .defineInRange("bloodUsageMultiplier", 2, 0, 20);
             bloodDrainAmount = COMMON_BUILDER
-                    .comment("Set how much blood will be removed from the player's Sanguine Praetor Armor  when he has his 'Blood Aura' activated, and a Blood Flask equipped."
+                    .comment("Set how much blood will be removed from the player's Sanguine Praetor Armor  when they have 'Blood Aura' activated, and a Blood Flask equipped."
                             , "This amount will be removed from the player's Blood Flask every 'bloodDrainSpeed'.")
                     .defineInRange("bloodDrainAmount", 1, 1, 20);
             COMMON_BUILDER.pop();
             COMMON_BUILDER.push("Praetor's Armor");
             praetorArmorRegen = COMMON_BUILDER
-                    .comment("If this value is 'true', when a player has blood in his Praetor Armor he will receive the regen effect.")
+                    .comment("If this value is 'true', when a player has blood in their Praetor Armor they will receive the regen effect.")
                     .define("praetorArmorRegen", true);
             praetorEyes = COMMON_BUILDER
                     .comment("If this value is 'false', the Sanguine Praetor's will have a different texture that will get rid of the red eyes.")

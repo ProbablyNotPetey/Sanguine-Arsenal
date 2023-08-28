@@ -1,0 +1,27 @@
+{
+    "type": "eidolon:worktable",
+    "pattern": [
+        " w ",
+        "wgw",
+        " w "
+    ],
+    "reagents": "sccc",
+    "key": {
+        "w": {
+            "item": "eidolon:wicked_weave"
+        },
+        "c": {
+            "item": "eidolon:crimson_essence"
+        },
+        "s": {
+            "item": "sanguinearsenal:sigil_of_the_dark_lord"
+        },
+        "g": {
+            "item": "eidolon:shadow_gem"
+        }
+    },
+    "result": {
+        "item": "sanguinearsenal:crimson_weave",
+        "count": 2
+    }
+}

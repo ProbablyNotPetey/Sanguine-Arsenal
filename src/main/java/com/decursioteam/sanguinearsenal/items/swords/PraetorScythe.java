@@ -1,7 +1,6 @@
 package com.decursioteam.sanguinearsenal.items.swords;
 
 import com.decursioteam.sanguinearsenal.core.SangArsConfig;
-import com.decursioteam.sanguinearsenal.core.Util.Item3D;
 import com.decursioteam.sanguinearsenal.core.Util.Keys;
 import com.decursioteam.sanguinearsenal.entities.FlyingScytheEntity;
 import com.google.common.collect.ImmutableMultimap;
@@ -28,7 +27,7 @@ import static com.decursioteam.sanguinearsenal.core.Util.BloodUtil.getBloodAmoun
 import static com.decursioteam.sanguinearsenal.core.Util.BloodUtil.removeBlood;
 import static com.decursioteam.sanguinearsenal.core.Util.LivingUtil.hasFullSPSet;
 
-public class PraetorScythe extends Item implements Item3D {
+public class PraetorScythe extends Item {
 
     public PraetorScythe(Item.Properties props) {
         super(props);

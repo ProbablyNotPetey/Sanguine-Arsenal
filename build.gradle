@@ -103,7 +103,7 @@ dependencies {
     compileOnly fg.deobf("top.theillusivec4.curios:curios-forge:${mc_version}-${curios_version}:api")
 //    compileOnly fg.deobf("curse.maven:curios-309927:3661903")
 //    runtimeOnly fg.deobf("curse.maven:curios-309927:3661903")
-    implementation fg.deobf("curse.maven:eidolon-rebrewed-665468:4721269")
+    implementation fg.deobf("curse.maven:eidolon-rebrewed-665468:4722182")
 
     // Testing
     //implementation fg.deobf("curse.maven:hexblades-528079:3528648")

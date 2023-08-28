@@ -38,6 +38,7 @@ public class ArsEclesiaCodex {
 
         public static void init() {
         {
+            //todo: redo this page
             BLESSING_OF_DARKNESS = new Chapter(makeChapterKey("blessing_of_darkness"),
                     new ChantPage(makePageKey("blessing_of_darkness.0"), Signs.MIND_SIGN, Signs.SOUL_SIGN, Signs.BLOOD_SIGN, Signs.SOUL_SIGN, Signs.MIND_SIGN),
                     new TextPage(makePageKey("blessing_of_darkness.1"))
@@ -132,7 +133,7 @@ public class ArsEclesiaCodex {
                                 new CruciblePage.CrucibleStep(new ItemStack(Blocks.REDSTONE_BLOCK.asItem())),
                                 new CruciblePage.CrucibleStep(1, new ItemStack(Items.GHAST_TEAR), new ItemStack(Registry.CRIMSON_ESSENCE.get())),
                                 new CruciblePage.CrucibleStep(1, new ItemStack(Registry.LESSER_SOUL_GEM.get(), 2), new ItemStack(Registry.CRIMSON_ESSENCE.get())),
-                                new CruciblePage.CrucibleStep(new ItemStack(Items.DIAMOND.asItem()))
+                                new CruciblePage.CrucibleStep(new ItemStack(Registry.SHADOW_GEM.get()))
                         ),
                         new TitlePage(makePageKey("blood_flask.0")),
                         new TextPage(makePageKey("blood_flask.1")),
@@ -164,8 +165,6 @@ public class ArsEclesiaCodex {
                                 new ItemStack(ItemInit.SANGUINE_CRYSTAL.get()), ItemStack.EMPTY, ItemStack.EMPTY,
                                 ItemStack.EMPTY, new ItemStack(Registry.SOULFIRE_WAND.get()), ItemStack.EMPTY,
                                 ItemStack.EMPTY, ItemStack.EMPTY, new ItemStack(ItemInit.SHADOW_INFUSED_INGOT.get())),
-                        new TitlePage(makePageKey("praetor_scythe.0")),
-                        new TextPage(makePageKey("praetor_scythe.1")),
                         new TitlePage(makePageKey("praetor_scythe.0")),
                         new TextPage(makePageKey("praetor_scythe.1")),
                         new CraftingPage(new ItemStack(ItemInit.PRAETOR_SCYTHE.get()),

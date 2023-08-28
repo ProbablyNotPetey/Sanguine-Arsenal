@@ -1,0 +1,29 @@
+{
+    "type": "eidolon:worktable",
+    "pattern": [
+        "i i",
+        "iii",
+        "cic"
+    ],
+    "reagents": "saga",
+    "key": {
+        "c": {
+            "item": "sanguinearsenal:crimson_weave"
+        },
+        "i": {
+            "item": "sanguinearsenal:shadow_ingot"
+        },
+        "s": {
+            "item": "sanguinearsenal:sigil_of_the_dark_lord"
+        },
+        "g": {
+            "item": "sanguinearsenal:sanguine_crystal"
+        },
+        "a": {
+            "item": "eidolon:gold_inlay"
+        }
+    },
+    "result": {
+        "item": "sanguinearsenal:sanguine_praetor_tunic"
+    }
+}

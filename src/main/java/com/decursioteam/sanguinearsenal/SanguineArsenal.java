@@ -65,8 +65,6 @@ public class SanguineArsenal {
             //todo : what is this for?
 //            ModLoadingContext.get().registerExtensionPoint(IExtensionPoint.DisplayTest.class, () -> Pair.of(() -> NetworkConstants.IGNORESERVERONLY, (a, b) -> true));
 
-            bus.addListener(this::init);
-
 
             FMLJavaModLoadingContext.get().getModEventBus().addListener(this::clientSetup);
 //            if(ModList.get().isLoaded("classicbar")) EventHandler.register(new BloodBarClassicBars());
@@ -105,20 +103,7 @@ public class SanguineArsenal {
         });
     }
 
-
-
-
-
-
     public void sendImc(InterModEnqueueEvent evt) {
         InterModComms.sendTo("curios", SlotTypeMessage.REGISTER_TYPE, () -> SlotTypePreset.BELT.getMessageBuilder().build());
-    }
-
-    // todo: fix
-    private void init(ModelEvent.RegisterAdditional modelRegistryEvent) {
-        for (String item : ModelInit.HAND_MODEL_ITEMS) {
-//            ModelLoader.addSpecialModel(new ModelResourceLocation(SanguineArsenal.MOD_ID + ":" + item + "_in_hand", "inventory"));
-            modelRegistryEvent.register(new ModelResourceLocation(SanguineArsenal.MOD_ID + ":" + item + "_in_hand", "inventory"));
-        }
     }
 }

@@ -1,0 +1,32 @@
+{
+    "type": "eidolon:worktable",
+    "pattern": [
+        " gi",
+        " wg",
+        "i  "
+    ],
+    "reagents": "saca",
+    "key": {
+        "c": {
+            "item": "eidolon:crimson_essence"
+        },
+        "i": {
+            "item": "sanguinearsenal:shadow_ingot"
+        },
+        "s": {
+            "item": "sanguinearsenal:sigil_of_the_dark_lord"
+        },
+        "g": {
+            "item": "sanguinearsenal:sanguine_crystal"
+        },
+        "w": {
+            "item": "eidolon:reaper_scythe"
+        },
+        "a": {
+            "item": "eidolon:gold_inlay"
+        }
+    },
+    "result": {
+        "item": "sanguinearsenal:praetor_scythe"
+    }
+}
