@@ -57,16 +57,16 @@ public class SangArsConfig {
             COMMON_BUILDER.pop();
             COMMON_BUILDER.push("Blood Aura");
             bloodAuraParticles = COMMON_BUILDER
-                    .comment("If this value is 'true', when a player activates 'Blood Aura' they will be followed by 2 particles moving in a circle around him.")
+                    .comment("If this value is 'true', when a player activates 'Blood Aura' they will be followed by 2 particles moving in a circle around them.")
                     .define("bloodAuraParticles", true);
             bloodAuraEffects = COMMON_BUILDER
-                    .comment("If this value is 'true', when a player activates 'Blood Aura' effects will be applied to him depending of the dimension he's in.")
+                    .comment("If this value is 'true', when a player activates 'Blood Aura' effects will be applied to them depending of the dimension they're in.")
                     .define("bloodAuraEffects", true);
             praetorEffectMultiplier = COMMON_BUILDER
-                    .comment("Set the multiplier of the effects that a player receives when he's wearing the full set of Praetor Armor. ")
+                    .comment("Set the multiplier of the effects that a player receives when they're wearing the full set of Praetor Armor. ")
                     .defineInRange("praetorEffectMultiplier", 0, 0, 100000);
 //            bloodFlaskEffectMultiplier = COMMON_BUILDER
-//                    .comment("Set the multiplier of the effects that a player receives when he's wearing the full set of Praetor Armor and a Blood Flask.")
+//                    .comment("Set the multiplier of the effects that a player receives when they're wearing the full set of Praetor Armor and a Blood Flask.")
 //                    .defineInRange("bloodFlaskEffectMultiplier", 1, 0, 100000);
             bloodAuraEffectMultiplier = COMMON_BUILDER
                     .comment("Set the multiplier of the effects that a player receives when they have activated 'Blood Aura'.")

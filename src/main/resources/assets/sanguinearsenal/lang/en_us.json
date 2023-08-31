@@ -32,7 +32,8 @@
 
   "sanguinearsenal.codex.chapter.blessing_of_darkness": "Blessing of Darkness",
   "sanguinearsenal.codex.page.blessing_of_darkness.0.title": "Blessing of Darkness",
-  "sanguinearsenal.codex.page.blessing_of_darkness.0": "It seems like The dark Lord has taken a huge interest into you. Considering your devotion towards them, they decided to bless you with one of their most powerful artifacts",
+//  "sanguinearsenal.codex.page.blessing_of_darkness.0": "It seems like The dark Lord has taken a huge interest into you. Considering your devotion towards them, they decided to bless you with one of their most powerful artifacts",
+  "sanguinearsenal.codex.page.blessing_of_darkness.0": "It seems like The dark Lord has taken a huge interest into you. Considering your devotion towards them, they decided to bless you with one of their most powerful artifacts, thus guiding you on the path of becoming their messenger in the universe.",
   "sanguinearsenal.codex.page.blessing_of_darkness.1": "thus guiding you on the path of becoming their messenger in the universe. This chant, when cast on a Shadow Gem, will change the gem. Transfigured, the gem will now become The Sigil of The Dark Lord.",
 
   "sanguinearsenal.codex.chapter.sp_armor": "Praetor's Armor",
@@ -48,7 +49,7 @@
   "sanguinearsenal.codex.page.sp_boots.title": "Praetor's Boots",
   "sanguinearsenal.codex.page.sp_boots": "The Praetor's Boots will improve the wearer's mobility even further, thus allowing reductions in movement speed to obstacles and terrain, which are mitigated by seventy percent. And similarly to the Warlock's boots, the wearer will become immune to the slowness effect.",
 
-  "sanguinearsenal.codex.page.full_set.0.title": "Full set bonuses",
+  "sanguinearsenal.codex.page.full_set.0.title": "Full Set Bonuses",
   "sanguinearsenal.codex.page.full_set.0": "Lastly, this is the part where the Praetor's Armor really shines. When the full set is worn, the wearer will be totally immune to the wither effect and will receive Regeneration. Additionally,",
   "sanguinearsenal.codex.page.full_set.1": "the Praetor's Armor has the ability to gather and channel the life essence of all the fallen enemies. While wearing the armor, one can kill mobs to fill up their Blood Bar.",
   "sanguinearsenal.codex.page.full_set.2": "The Blood Bar can be consumed either by The Scepter of Blood and the Praetor's Scythe to unleash powerful attacks, or by the player. When the Blood Bar is completely full, the player can unleash the Blood Aura, which is a direct connection to the Dark Lord, ",

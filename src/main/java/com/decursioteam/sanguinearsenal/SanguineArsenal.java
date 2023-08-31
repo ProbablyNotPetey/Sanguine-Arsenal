@@ -59,7 +59,7 @@ public class SanguineArsenal {
             - EvilCraft compat?
             - Fix getting regen when equipping blood flask                      DONE
             - Fix scythe being unenchantable                                    DONE
-            - Redo Book
+            - Redo Book                                                         DONE
      */
     public SanguineArsenal() {
         IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();

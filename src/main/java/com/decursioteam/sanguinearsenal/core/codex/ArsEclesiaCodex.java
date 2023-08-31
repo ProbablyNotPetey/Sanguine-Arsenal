@@ -3,6 +3,7 @@ package com.decursioteam.sanguinearsenal.core.codex;
 import com.decursioteam.sanguinearsenal.SanguineArsenal;
 import com.decursioteam.sanguinearsenal.core.init.BlockInit;
 import com.decursioteam.sanguinearsenal.core.init.ItemInit;
+import com.decursioteam.sanguinearsenal.recipes.rituals.EidolonRituals;
 import elucent.eidolon.Registry;
 import elucent.eidolon.codex.*;
 import elucent.eidolon.spell.Signs;
@@ -36,14 +37,26 @@ public class ArsEclesiaCodex {
             return prefix + "chapter." + path;
         }
 
-        //todo: redo entire book with new recipes
 
         public static void init() {
         {
+            // todo: fix when spells are added
+//            BLESSING_OF_DARKNESS = new Chapter(makeChapterKey("blessing_of_darkness"),
+//                    new ChantPage(makePageKey("blessing_of_darkness.0"), Signs.MIND_SIGN, Signs.SOUL_SIGN, Signs.BLOOD_SIGN, Signs.SOUL_SIGN, Signs.MIND_SIGN),
+//                    new TextPage(makePageKey("blessing_of_darkness.1"))
+//            );
             BLESSING_OF_DARKNESS = new Chapter(makeChapterKey("blessing_of_darkness"),
-                    new ChantPage(makePageKey("blessing_of_darkness.0"), Signs.MIND_SIGN, Signs.SOUL_SIGN, Signs.BLOOD_SIGN, Signs.SOUL_SIGN, Signs.MIND_SIGN),
-                    new TextPage(makePageKey("blessing_of_darkness.1"))
-            );
+                    new TitlePage(makePageKey("blessing_of_darkness.0")),
+//                    new TextPage(makePageKey("blessing_of_darkness.1")),
+                    new RitualPage(EidolonRituals.SIGIL_OF_THE_DARK_LORD, PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.HARMING),
+                            new RitualPage.RitualIngredient(new ItemStack(Registry.ZOMBIE_HEART.get()), false),
+                            new RitualPage.RitualIngredient(new ItemStack(ItemInit.SHADOW_INFUSED_NUGGET.get()), false),
+                            new RitualPage.RitualIngredient(new ItemStack(ItemInit.SHADOW_INFUSED_NUGGET.get()), false),
+                            new RitualPage.RitualIngredient(new ItemStack(Registry.UNHOLY_SYMBOL.get()), true),
+                            new RitualPage.RitualIngredient(new ItemStack(Registry.CRIMSON_ESSENCE.get()), false),
+                            new RitualPage.RitualIngredient(new ItemStack(Registry.CRIMSON_ESSENCE.get()), false),
+                            new RitualPage.RitualIngredient(new ItemStack(Registry.LESSER_SOUL_GEM.get()), false)
+            ));
 
             SHADOW_INFUSED_INGOT = new Chapter(makeChapterKey("shadow_infused_ingot"),
                     new TitlePage(makePageKey("shadow_infused_ingot.0")),
@@ -59,10 +72,19 @@ public class ArsEclesiaCodex {
                 SANGUINE_PRAETOR_ARMOR = new Chapter(makeChapterKey("sp_armor"),
                     new TitlePage(makePageKey("crimson_weave.0")),
                     new TextPage(makePageKey("crimson_weave.1")),
-                    new CraftingPage(new ItemStack(ItemInit.CRIMSON_WEAVE.get()),
-                            new ItemStack(Registry.CRIMSON_ESSENCE.get()), new ItemStack(Registry.WICKED_WEAVE.get()), new ItemStack(Registry.CRIMSON_ESSENCE.get()),
-                            new ItemStack(Registry.WICKED_WEAVE.get()), new ItemStack(ItemInit.SIGIL_OF_THE_DARK_LORD.get()), new ItemStack(Registry.WICKED_WEAVE.get()),
-                            new ItemStack(Registry.CRIMSON_ESSENCE.get()),new ItemStack(Registry.WICKED_WEAVE.get()),new ItemStack(Registry.CRIMSON_ESSENCE.get())),
+                    new WorktablePage(new ItemStack(ItemInit.CRIMSON_WEAVE.get(), 2),
+                            ItemStack.EMPTY, new ItemStack(Registry.WICKED_WEAVE.get()), ItemStack.EMPTY,
+                            new ItemStack(Registry.WICKED_WEAVE.get()), new ItemStack(Registry.SHADOW_GEM.get()), new ItemStack(Registry.WICKED_WEAVE.get()),
+                            ItemStack.EMPTY, new ItemStack(Registry.WICKED_WEAVE.get()), ItemStack.EMPTY,
+
+                            new ItemStack(Registry.CRIMSON_ESSENCE.get()), new ItemStack(Registry.CRIMSON_ESSENCE.get()), new ItemStack(Registry.CRIMSON_ESSENCE.get()), new ItemStack(Registry.CRIMSON_ESSENCE.get())
+                    ),
+
+
+//                    new CraftingPage(new ItemStack(ItemInit.CRIMSON_WEAVE.get()),
+//                            new ItemStack(Registry.CRIMSON_ESSENCE.get()), new ItemStack(Registry.WICKED_WEAVE.get()), new ItemStack(Registry.CRIMSON_ESSENCE.get()),
+//                            new ItemStack(Registry.WICKED_WEAVE.get()), new ItemStack(ItemInit.SIGIL_OF_THE_DARK_LORD.get()), new ItemStack(Registry.WICKED_WEAVE.get()),
+//                            new ItemStack(Registry.CRIMSON_ESSENCE.get()),new ItemStack(Registry.WICKED_WEAVE.get()),new ItemStack(Registry.CRIMSON_ESSENCE.get())),
                     /*new WorktablePage(new ItemStack(ItemInit.CRIMSON_WEAVE.get()),
                         new ItemStack(Items.WHITE_WOOL), new ItemStack(Registry.WICKED_WEAVE.get()), new ItemStack(Items.WHITE_WOOL),
                         new ItemStack(Registry.WICKED_WEAVE.get()), new ItemStack(ItemInit.SHADOW_INFUSED_NUGGET.get()), new ItemStack(Registry.WICKED_WEAVE.get()),
@@ -70,10 +92,18 @@ public class ArsEclesiaCodex {
                         new ItemStack(ItemInit.SIGIL_OF_THE_DARK_LORD.get()), new ItemStack(Items.RED_DYE), new ItemStack(Registry.LESSER_SOUL_GEM.get()), new ItemStack(Items.RED_DYE)
                     ),*/
                     new TitlePage(makePageKey("sp_hood")),
-                    new CraftingPage(new ItemStack(ItemInit.SP_HELMET.get()),
-                            new ItemStack(ItemInit.SHADOW_INFUSED_INGOT.get()), new ItemStack(ItemInit.CRIMSON_WEAVE.get()), new ItemStack(ItemInit.SHADOW_INFUSED_INGOT.get()),
-                            new ItemStack(ItemInit.CRIMSON_WEAVE.get()), new ItemStack(ItemInit.SIGIL_OF_THE_DARK_LORD.get()), new ItemStack(ItemInit.CRIMSON_WEAVE.get()),
-                            new ItemStack(ItemInit.SHADOW_INFUSED_INGOT.get()),new ItemStack(ItemInit.CRIMSON_WEAVE.get()),new ItemStack(ItemInit.SHADOW_INFUSED_INGOT.get())),
+                    new WorktablePage(new ItemStack(ItemInit.SP_HELMET.get()),
+                            new ItemStack(ItemInit.CRIMSON_WEAVE.get()), new ItemStack(ItemInit.CRIMSON_WEAVE.get()), new ItemStack(ItemInit.CRIMSON_WEAVE.get()),
+                            new ItemStack(ItemInit.CRIMSON_WEAVE.get()), ItemStack.EMPTY, new ItemStack(ItemInit.CRIMSON_WEAVE.get()),
+                            new ItemStack(ItemInit.SHADOW_INFUSED_INGOT.get()), ItemStack.EMPTY, new ItemStack(ItemInit.SHADOW_INFUSED_INGOT.get()),
+
+                            new ItemStack(ItemInit.SIGIL_OF_THE_DARK_LORD.get()), ItemStack.EMPTY, new ItemStack(ItemInit.SANGUINE_CRYSTAL.get()), ItemStack.EMPTY
+                    ),
+
+//                    new CraftingPage(new ItemStack(ItemInit.SP_HELMET.get()),
+//                            new ItemStack(ItemInit.SHADOW_INFUSED_INGOT.get()), new ItemStack(ItemInit.CRIMSON_WEAVE.get()), new ItemStack(ItemInit.SHADOW_INFUSED_INGOT.get()),
+//                            new ItemStack(ItemInit.CRIMSON_WEAVE.get()), new ItemStack(ItemInit.SIGIL_OF_THE_DARK_LORD.get()), new ItemStack(ItemInit.CRIMSON_WEAVE.get()),
+//                            new ItemStack(ItemInit.SHADOW_INFUSED_INGOT.get()),new ItemStack(ItemInit.CRIMSON_WEAVE.get()),new ItemStack(ItemInit.SHADOW_INFUSED_INGOT.get())),
                     /*new TitledRitualPage(makePageKey("sp_hood"), EidolonRituals.SANGUINE_PRAETOR_HOOD, new ItemStack(Registry.SHADOW_GEM.get()),
                         new RitualPage.RitualIngredient(new ItemStack(ItemInit.CRIMSON_WEAVE.get()), false),
                         new RitualPage.RitualIngredient(new ItemStack(Registry.GOLD_INLAY.get()), false),
@@ -84,15 +114,35 @@ public class ArsEclesiaCodex {
                         new RitualPage.RitualIngredient(new ItemStack(ItemInit.CRIMSON_WEAVE.get()), false)
                     ),*/
                     new TitlePage(makePageKey("sp_tunic")),
-                    new CraftingPage(new ItemStack(ItemInit.SP_CHESTPLATE.get()),
-                            new ItemStack(ItemInit.SHADOW_INFUSED_INGOT.get()), new ItemStack(ItemInit.SIGIL_OF_THE_DARK_LORD.get()), new ItemStack(ItemInit.SHADOW_INFUSED_INGOT.get()),
-                            new ItemStack(ItemInit.CRIMSON_WEAVE.get()), new ItemStack(ItemInit.SHADOW_INFUSED_INGOT.get()), new ItemStack(ItemInit.CRIMSON_WEAVE.get()),
-                            new ItemStack(Registry.GOLD_INLAY.get()),new ItemStack(ItemInit.SHADOW_INFUSED_INGOT.get()),new ItemStack(Registry.GOLD_INLAY.get())),
-                    new TitlePage(makePageKey("sp_leggings")),
-                    new CraftingPage(new ItemStack(ItemInit.SP_LEGGINGS.get()),
+                    new WorktablePage(new ItemStack(ItemInit.SP_CHESTPLATE.get()),
+                            new ItemStack(ItemInit.SHADOW_INFUSED_INGOT.get()), ItemStack.EMPTY, new ItemStack(ItemInit.SHADOW_INFUSED_INGOT.get()),
                             new ItemStack(ItemInit.SHADOW_INFUSED_INGOT.get()), new ItemStack(ItemInit.SHADOW_INFUSED_INGOT.get()), new ItemStack(ItemInit.SHADOW_INFUSED_INGOT.get()),
-                            new ItemStack(Registry.GOLD_INLAY.get()), new ItemStack(ItemInit.SIGIL_OF_THE_DARK_LORD.get()), new ItemStack(Registry.GOLD_INLAY.get()),
-                            new ItemStack(ItemInit.SHADOW_INFUSED_INGOT.get()), ItemStack.EMPTY, new ItemStack(ItemInit.SHADOW_INFUSED_INGOT.get())),
+                            new ItemStack(ItemInit.CRIMSON_WEAVE.get()), new ItemStack(ItemInit.SHADOW_INFUSED_INGOT.get()), new ItemStack(ItemInit.CRIMSON_WEAVE.get()),
+
+                            new ItemStack(ItemInit.SIGIL_OF_THE_DARK_LORD.get()), new ItemStack(Registry.GOLD_INLAY.get()), new ItemStack(ItemInit.SANGUINE_CRYSTAL.get()), new ItemStack(Registry.GOLD_INLAY.get())
+                    ),
+
+
+
+//                    new CraftingPage(new ItemStack(ItemInit.SP_CHESTPLATE.get()),
+//                            new ItemStack(ItemInit.SHADOW_INFUSED_INGOT.get()), new ItemStack(ItemInit.SIGIL_OF_THE_DARK_LORD.get()), new ItemStack(ItemInit.SHADOW_INFUSED_INGOT.get()),
+//                            new ItemStack(ItemInit.CRIMSON_WEAVE.get()), new ItemStack(ItemInit.SHADOW_INFUSED_INGOT.get()), new ItemStack(ItemInit.CRIMSON_WEAVE.get()),
+//                            new ItemStack(Registry.GOLD_INLAY.get()),new ItemStack(ItemInit.SHADOW_INFUSED_INGOT.get()),new ItemStack(Registry.GOLD_INLAY.get())),
+
+                    new TitlePage(makePageKey("sp_leggings")),
+                    new WorktablePage(new ItemStack(ItemInit.SP_LEGGINGS.get()),
+                            new ItemStack(ItemInit.CRIMSON_WEAVE.get()), new ItemStack(ItemInit.SHADOW_INFUSED_INGOT.get()), new ItemStack(ItemInit.CRIMSON_WEAVE.get()),
+                            new ItemStack(ItemInit.SHADOW_INFUSED_INGOT.get()), new ItemStack(ItemInit.CRIMSON_WEAVE.get()), new ItemStack(ItemInit.SHADOW_INFUSED_INGOT.get()),
+                            new ItemStack(ItemInit.SHADOW_INFUSED_INGOT.get()), ItemStack.EMPTY, new ItemStack(ItemInit.SHADOW_INFUSED_INGOT.get()),
+
+                            new ItemStack(ItemInit.SIGIL_OF_THE_DARK_LORD.get()), new ItemStack(Registry.GOLD_INLAY.get()), new ItemStack(ItemInit.SANGUINE_CRYSTAL.get()), new ItemStack(Registry.GOLD_INLAY.get())
+                    ),
+
+
+//                    new CraftingPage(new ItemStack(ItemInit.SP_LEGGINGS.get()),
+//                            new ItemStack(ItemInit.SHADOW_INFUSED_INGOT.get()), new ItemStack(ItemInit.SHADOW_INFUSED_INGOT.get()), new ItemStack(ItemInit.SHADOW_INFUSED_INGOT.get()),
+//                            new ItemStack(Registry.GOLD_INLAY.get()), new ItemStack(ItemInit.SIGIL_OF_THE_DARK_LORD.get()), new ItemStack(Registry.GOLD_INLAY.get()),
+//                            new ItemStack(ItemInit.SHADOW_INFUSED_INGOT.get()), ItemStack.EMPTY, new ItemStack(ItemInit.SHADOW_INFUSED_INGOT.get())),
                     /*new TitledRitualPage(makePageKey("sp_tunic_and_leggings"),EidolonRituals.SANGUINE_PRAETOR_TUNIC, new ItemStack(Registry.SHADOW_GEM.get()),
                             new RitualPage.RitualIngredient(new ItemStack(ItemInit.CRIMSON_WEAVE.get()), false),
                             new RitualPage.RitualIngredient(new ItemStack(Registry.GOLD_INLAY.get()), false),
@@ -103,10 +153,19 @@ public class ArsEclesiaCodex {
                             new RitualPage.RitualIngredient(new ItemStack(ItemInit.CRIMSON_WEAVE.get()), false)
                     ),*/
                     new TitlePage(makePageKey("sp_boots")),
-                    new CraftingPage(new ItemStack(ItemInit.SP_BOOTS.get()),
-                        new ItemStack(ItemInit.SHADOW_INFUSED_INGOT.get()), new ItemStack(ItemInit.SIGIL_OF_THE_DARK_LORD.get()), new ItemStack(ItemInit.SHADOW_INFUSED_INGOT.get()),
-                        new ItemStack(ItemInit.SHADOW_INFUSED_INGOT.get()), ItemStack.EMPTY, new ItemStack(ItemInit.SHADOW_INFUSED_INGOT.get()),
-                        ItemStack.EMPTY, ItemStack.EMPTY, ItemStack.EMPTY),
+                    new WorktablePage(new ItemStack(ItemInit.SP_BOOTS.get()),
+                            ItemStack.EMPTY, ItemStack.EMPTY, ItemStack.EMPTY,
+                            new ItemStack(ItemInit.SHADOW_INFUSED_INGOT.get()), ItemStack.EMPTY, new ItemStack(ItemInit.SHADOW_INFUSED_INGOT.get()),
+                            new ItemStack(ItemInit.SHADOW_INFUSED_INGOT.get()), new ItemStack(ItemInit.CRIMSON_WEAVE.get()), new ItemStack(ItemInit.SHADOW_INFUSED_INGOT.get()),
+
+                            new ItemStack(ItemInit.SIGIL_OF_THE_DARK_LORD.get()), ItemStack.EMPTY, new ItemStack(ItemInit.SANGUINE_CRYSTAL.get()), ItemStack.EMPTY
+                    ),
+
+
+//                    new CraftingPage(new ItemStack(ItemInit.SP_BOOTS.get()),
+//                        new ItemStack(ItemInit.SHADOW_INFUSED_INGOT.get()), new ItemStack(ItemInit.SIGIL_OF_THE_DARK_LORD.get()), new ItemStack(ItemInit.SHADOW_INFUSED_INGOT.get()),
+//                        new ItemStack(ItemInit.SHADOW_INFUSED_INGOT.get()), ItemStack.EMPTY, new ItemStack(ItemInit.SHADOW_INFUSED_INGOT.get()),
+//                        ItemStack.EMPTY, ItemStack.EMPTY, ItemStack.EMPTY),
                     /*new TitledRitualPage(makePageKey("sp_boots"), EidolonRituals.SANGUINE_PRAETOR_BOOTS, new ItemStack(Registry.SHADOW_GEM.get()),
                         new RitualPage.RitualIngredient(new ItemStack(ItemInit.CRIMSON_WEAVE.get()), false),
                         new RitualPage.RitualIngredient(new ItemStack(Registry.GOLD_INLAY.get()), false),
@@ -123,8 +182,8 @@ public class ArsEclesiaCodex {
                     new TitlePage(makePageKey("full_set.overworld")),
                     new TitlePage(makePageKey("full_set.nether")),
                     new TitlePage(makePageKey("full_set.end")),
-                    new TitlePage(makePageKey("full_set.twilight_forest")),
-                    new TitlePage(makePageKey("full_set.atum"))
+                    new TitlePage(makePageKey("full_set.twilight_forest"))
+//                    new TitlePage(makePageKey("full_set.atum"))
                 );
             }
             {
@@ -138,10 +197,18 @@ public class ArsEclesiaCodex {
                         ),
                         new TitlePage(makePageKey("blood_flask.0")),
                         new TextPage(makePageKey("blood_flask.1")),
-                        new CraftingPage(new ItemStack(ItemInit.BLOOD_FLASK.get()),
-                                new ItemStack(Registry.CRIMSON_ESSENCE.get()), new ItemStack(ItemInit.SIGIL_OF_THE_DARK_LORD.get()), new ItemStack(Registry.CRIMSON_ESSENCE.get()),
+                        new WorktablePage(new ItemStack(ItemInit.BLOOD_FLASK.get()),
+                                ItemStack.EMPTY, new ItemStack(Registry.GOLD_INLAY.get()), ItemStack.EMPTY,
                                 new ItemStack(Items.GLASS), new ItemStack(ItemInit.ZOMBIE_HEART_STEW.get()), new ItemStack(Items.GLASS),
-                                new ItemStack(Registry.CRIMSON_ESSENCE.get()),new ItemStack(Registry.SHADOW_GEM.get()),new ItemStack(Registry.CRIMSON_ESSENCE.get())),
+                                new ItemStack(Registry.SHADOW_GEM.get()), new ItemStack(Items.GLASS), new ItemStack(Registry.SHADOW_GEM.get()),
+
+                                new ItemStack(ItemInit.SIGIL_OF_THE_DARK_LORD.get()), new ItemStack(Registry.CRIMSON_ESSENCE.get()), new ItemStack(ItemInit.SANGUINE_CRYSTAL.get()), new ItemStack(Registry.CRIMSON_ESSENCE.get())
+                        ),
+
+//                        new CraftingPage(new ItemStack(ItemInit.BLOOD_FLASK.get()),
+//                                new ItemStack(Registry.CRIMSON_ESSENCE.get()), new ItemStack(ItemInit.SIGIL_OF_THE_DARK_LORD.get()), new ItemStack(Registry.CRIMSON_ESSENCE.get()),
+//                                new ItemStack(Items.GLASS), new ItemStack(ItemInit.ZOMBIE_HEART_STEW.get()), new ItemStack(Items.GLASS),
+//                                new ItemStack(Registry.CRIMSON_ESSENCE.get()),new ItemStack(Registry.SHADOW_GEM.get()),new ItemStack(Registry.CRIMSON_ESSENCE.get())),
                         /*new TitledRitualPage(makePageKey("blood_flask.0"), EidolonRituals.BLOOD_FLASK, PotionUtils.setPotion(new ItemStack(Items.POTION),
                                 Potions.REGENERATION),
                                 new RitualPage.RitualIngredient(new ItemStack(Items.GLASS), false),
@@ -162,16 +229,33 @@ public class ArsEclesiaCodex {
                                 new RitualPage.RitualIngredient(new ItemStack(ItemInit.SHADOW_INFUSED_INGOT.get()), false),
                                 new RitualPage.RitualIngredient(new ItemStack(Registry.POLISHED_PLANKS.getBlock().asItem()), false)
                         ),*/
-                        new CraftingPage(new ItemStack(ItemInit.SCEPTER_OF_BLOOD.get()),
-                                new ItemStack(ItemInit.SANGUINE_CRYSTAL.get()), ItemStack.EMPTY, ItemStack.EMPTY,
-                                ItemStack.EMPTY, new ItemStack(Registry.SOULFIRE_WAND.get()), ItemStack.EMPTY,
-                                ItemStack.EMPTY, ItemStack.EMPTY, new ItemStack(ItemInit.SHADOW_INFUSED_INGOT.get())),
+                        new WorktablePage(new ItemStack(ItemInit.SCEPTER_OF_BLOOD.get()),
+                                ItemStack.EMPTY, new ItemStack(ItemInit.SHADOW_INFUSED_INGOT.get()), new ItemStack(ItemInit.SANGUINE_CRYSTAL.get()),
+                                ItemStack.EMPTY, new ItemStack(Registry.SOULFIRE_WAND.get()), new ItemStack(ItemInit.SHADOW_INFUSED_INGOT.get()),
+                                new ItemStack(ItemInit.SHADOW_INFUSED_INGOT.get()), ItemStack.EMPTY, ItemStack.EMPTY,
+
+                                new ItemStack(ItemInit.SIGIL_OF_THE_DARK_LORD.get()), new ItemStack(Registry.CRIMSON_ESSENCE.get()), ItemStack.EMPTY, new ItemStack(Registry.CRIMSON_ESSENCE.get())
+                        ),
+
+//                        new CraftingPage(new ItemStack(ItemInit.SCEPTER_OF_BLOOD.get()),
+//                                new ItemStack(ItemInit.SANGUINE_CRYSTAL.get()), ItemStack.EMPTY, ItemStack.EMPTY,
+//                                ItemStack.EMPTY, new ItemStack(Registry.SOULFIRE_WAND.get()), ItemStack.EMPTY,
+//                                ItemStack.EMPTY, ItemStack.EMPTY, new ItemStack(ItemInit.SHADOW_INFUSED_INGOT.get())),
                         new TitlePage(makePageKey("praetor_scythe.0")),
                         new TextPage(makePageKey("praetor_scythe.1")),
-                        new CraftingPage(new ItemStack(ItemInit.PRAETOR_SCYTHE.get()),
-                                new ItemStack(Registry.GOLD_INLAY.get()),new ItemStack(ItemInit.SANGUINE_CRYSTAL.get()), ItemStack.EMPTY,
-                                new ItemStack(ItemInit.SANGUINE_CRYSTAL.get()), new ItemStack(Registry.REAPER_SCYTHE.get()), ItemStack.EMPTY,
-                                ItemStack.EMPTY, ItemStack.EMPTY, new ItemStack(ItemInit.SHADOW_INFUSED_INGOT.get()))
+                        new WorktablePage(new ItemStack(ItemInit.PRAETOR_SCYTHE.get()),
+                                ItemStack.EMPTY, new ItemStack(ItemInit.SANGUINE_CRYSTAL.get()), new ItemStack(ItemInit.SHADOW_INFUSED_INGOT.get()),
+                                ItemStack.EMPTY, new ItemStack(Registry.REAPER_SCYTHE.get()), new ItemStack(ItemInit.SANGUINE_CRYSTAL.get()),
+                                new ItemStack(ItemInit.SHADOW_INFUSED_INGOT.get()), ItemStack.EMPTY, ItemStack.EMPTY,
+
+                                new ItemStack(ItemInit.SIGIL_OF_THE_DARK_LORD.get()), new ItemStack(Registry.GOLD_INLAY.get()), new ItemStack(Registry.CRIMSON_ESSENCE.get()), new ItemStack(Registry.GOLD_INLAY.get())
+                        )
+
+
+//                        new CraftingPage(new ItemStack(ItemInit.PRAETOR_SCYTHE.get()),
+//                                new ItemStack(Registry.GOLD_INLAY.get()),new ItemStack(ItemInit.SANGUINE_CRYSTAL.get()), ItemStack.EMPTY,
+//                                new ItemStack(ItemInit.SANGUINE_CRYSTAL.get()), new ItemStack(Registry.REAPER_SCYTHE.get()), ItemStack.EMPTY,
+//                                ItemStack.EMPTY, ItemStack.EMPTY, new ItemStack(ItemInit.SHADOW_INFUSED_INGOT.get()))
                         /*new TitledRitualPage(makePageKey("praetor_scythe.0"),EidolonRituals.PRAETOR_SCYTHE, new ItemStack(Registry.REAPER_SCYTHE.get()),
                                 new RitualPage.RitualIngredient(new ItemStack(Items.CRYING_OBSIDIAN), false),
                                 new RitualPage.RitualIngredient(new ItemStack(Registry.GOLD_INLAY.get()), false),
