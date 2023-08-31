@@ -56,9 +56,6 @@ public class SPArmorItem extends ArmorItem {
                 setBloodAura(playerEntity, false);
             }
             if (hasFullSPSet(playerEntity)) {
-                if (hasBloodFlask(playerEntity)) {
-                    addEffects(world, playerEntity, SangArsConfig.COMMON.bloodFlaskEffectMultiplier.get(), 61, SangArsConfig.COMMON.praetorArmorRegen.get());
-                }
                 if (getBloodAura(playerEntity) && getBloodAmount(playerEntity, false) >= 1) {
                     if (SangArsConfig.COMMON.bloodAuraEffects.get()) {
                         if (world.getGameTime() % SangArsConfig.COMMON.bloodDrainSpeed.get() == 0) {

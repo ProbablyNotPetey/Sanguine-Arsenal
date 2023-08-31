@@ -18,14 +18,14 @@ public class SangArsConfig {
         public final ForgeConfigSpec.BooleanValue bloodAuraParticles;
         public final ForgeConfigSpec.BooleanValue bloodAuraEffects;
         public final ForgeConfigSpec.IntValue praetorEffectMultiplier;
-        public final ForgeConfigSpec.IntValue bloodFlaskEffectMultiplier;
+//        public final ForgeConfigSpec.IntValue bloodFlaskEffectMultiplier;
         public final ForgeConfigSpec.IntValue bloodAuraEffectMultiplier;
         public final ForgeConfigSpec.IntValue bloodDrainSpeed;
         public final ForgeConfigSpec.IntValue bloodUsageMultiplier;
         public final ForgeConfigSpec.IntValue bloodDrainAmount;
 
         // Sanguine Praetor Armor
-        public final ForgeConfigSpec.BooleanValue praetorArmorRegen;
+//        public final ForgeConfigSpec.BooleanValue praetorArmorRegen;
         public final ForgeConfigSpec.BooleanValue praetorEyes;
 
         // Scepter of Blood
@@ -65,9 +65,9 @@ public class SangArsConfig {
             praetorEffectMultiplier = COMMON_BUILDER
                     .comment("Set the multiplier of the effects that a player receives when he's wearing the full set of Praetor Armor. ")
                     .defineInRange("praetorEffectMultiplier", 0, 0, 100000);
-            bloodFlaskEffectMultiplier = COMMON_BUILDER
-                    .comment("Set the multiplier of the effects that a player receives when he's wearing the full set of Praetor Armor and a Blood Flask.")
-                    .defineInRange("bloodFlaskEffectMultiplier", 1, 0, 100000);
+//            bloodFlaskEffectMultiplier = COMMON_BUILDER
+//                    .comment("Set the multiplier of the effects that a player receives when he's wearing the full set of Praetor Armor and a Blood Flask.")
+//                    .defineInRange("bloodFlaskEffectMultiplier", 1, 0, 100000);
             bloodAuraEffectMultiplier = COMMON_BUILDER
                     .comment("Set the multiplier of the effects that a player receives when they have activated 'Blood Aura'.")
                     .defineInRange("bloodAuraEffectMultiplier", 3, 0, 100000);
@@ -84,9 +84,9 @@ public class SangArsConfig {
                     .defineInRange("bloodDrainAmount", 1, 1, 20);
             COMMON_BUILDER.pop();
             COMMON_BUILDER.push("Praetor's Armor");
-            praetorArmorRegen = COMMON_BUILDER
-                    .comment("If this value is 'true', when a player has blood in their Praetor Armor they will receive the regen effect.")
-                    .define("praetorArmorRegen", true);
+//            praetorArmorRegen = COMMON_BUILDER
+//                    .comment("If this value is 'true', when a player has blood in their Praetor Armor they will receive the regen effect.")
+//                    .define("praetorArmorRegen", true);
             praetorEyes = COMMON_BUILDER
                     .comment("If this value is 'false', the Sanguine Praetor's will have a different texture that will get rid of the red eyes.")
                     .define("praetorEyes", true);

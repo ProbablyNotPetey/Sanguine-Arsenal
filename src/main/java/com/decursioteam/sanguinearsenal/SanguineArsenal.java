@@ -57,8 +57,9 @@ public class SanguineArsenal {
             - More dimension compat
             - Make Circle Tint particle look a bit better
             - EvilCraft compat?
-            - Fix getting regen when equipping blood flask
-            - Fix scythe being unenchantable
+            - Fix getting regen when equipping blood flask                      DONE
+            - Fix scythe being unenchantable                                    DONE
+            - Redo Book
      */
     public SanguineArsenal() {
         IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
