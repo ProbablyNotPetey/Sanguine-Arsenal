@@ -3,7 +3,7 @@ loaderVersion="[36,)"
 license="BSD"
 [[mods]]
 modId="sanguinearsenal"
-version="0.1.72"
+version="0.2.0"
 displayName="Sanguine Arsenal"
 logoFile="sanguine_arsenal.png"
 credits="Sanguine Arsenal by the Decursio Team"
