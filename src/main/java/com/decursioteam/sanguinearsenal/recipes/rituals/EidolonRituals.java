@@ -44,20 +44,20 @@ public class EidolonRituals {
 
         RECHARGE_PRAETOR_SCYTHE = RitualRegistry.register(Registry.LESSER_SOUL_GEM.get(),
                 new RechargingRitual().setRegistryName(SanguineArsenal.MOD_ID, "praetor_scythe_recharging")
-                .addRequirement(new ItemRequirement(Items.REDSTONE))
-                .addRequirement(new ItemRequirement(Items.REDSTONE))
                 .addRequirement(new ItemRequirement(Registry.CRIMSON_ESSENCE.get()))
                 .addRequirement(new ItemRequirement(Registry.CRIMSON_ESSENCE.get()))
+                .addRequirement(new ItemRequirement(Items.REDSTONE))
+                .addRequirement(new ItemRequirement(Items.REDSTONE))
                 .addInvariant(new FocusItemPresentRequirement(ItemInit.PRAETOR_SCYTHE.get()))
         );
 
         RECHARGE_BLOOD_SCEPTER = RitualRegistry.register(Registry.LESSER_SOUL_GEM.get(),
                 new RechargingRitual().setRegistryName(SanguineArsenal.MOD_ID, "blood_scepter_recharging")
-                        .addRequirement(new ItemRequirement(Items.REDSTONE))
-                        .addRequirement(new ItemRequirement(Items.REDSTONE))
-                        .addRequirement(new ItemRequirement(Registry.CRIMSON_ESSENCE.get()))
-                        .addRequirement(new ItemRequirement(Registry.CRIMSON_ESSENCE.get()))
-                        .addInvariant(new FocusItemPresentRequirement(ItemInit.SCEPTER_OF_BLOOD.get()))
+                .addRequirement(new ItemRequirement(Registry.CRIMSON_ESSENCE.get()))
+                .addRequirement(new ItemRequirement(Registry.CRIMSON_ESSENCE.get()))
+                .addRequirement(new ItemRequirement(Items.REDSTONE))
+                .addRequirement(new ItemRequirement(Items.REDSTONE))
+                .addInvariant(new FocusItemPresentRequirement(ItemInit.SCEPTER_OF_BLOOD.get()))
         );
 
         /*int fireColor = ColorUtil.packColor(255, 230, 30, 40);

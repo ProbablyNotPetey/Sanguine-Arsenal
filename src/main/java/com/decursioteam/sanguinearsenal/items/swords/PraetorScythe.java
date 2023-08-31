@@ -2,6 +2,7 @@ package com.decursioteam.sanguinearsenal.items.swords;
 
 import com.decursioteam.sanguinearsenal.core.SangArsConfig;
 import com.decursioteam.sanguinearsenal.core.Util.Keys;
+import com.decursioteam.sanguinearsenal.core.init.SangArsTiers;
 import com.decursioteam.sanguinearsenal.entities.FlyingScytheEntity;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
@@ -22,16 +23,17 @@ import net.minecraft.world.entity.decoration.ArmorStand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.SwordItem;
 import net.minecraft.world.level.Level;
 
 import static com.decursioteam.sanguinearsenal.core.Util.BloodUtil.getBloodAmount;
 import static com.decursioteam.sanguinearsenal.core.Util.BloodUtil.removeBlood;
 import static com.decursioteam.sanguinearsenal.core.Util.LivingUtil.hasFullSPSet;
 
-public class PraetorScythe extends Item implements IRechargeableWand {
+public class PraetorScythe extends SwordItem implements IRechargeableWand {
 
     public PraetorScythe(Item.Properties props) {
-        super(props);
+        super(SangArsTiers.PRAETOR_SCYTHE, 0, 0, props);
     }
 
     @Override
