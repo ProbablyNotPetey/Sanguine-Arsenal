@@ -47,6 +47,18 @@ public class SanguineArsenal {
     public static final Logger LOGGER = LogManager.getLogger();
     public static final String MOD_ID = "sanguinearsenal";
 
+
+    /*
+        todo list:
+            - Sign of the Dark Lord recipe (ritual?)                            DONE
+            - Recharge Scythe + Staff rituals
+            - Make sanguine crystals stackable                                  DONE
+            - Classic bars compat
+            - More dimension compat
+            - Make Circle Tint particle look a bit better
+            - EvilCraft compat?
+            - Fix getting regen when equipping blood flask
+     */
     public SanguineArsenal() {
         IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, SangArsConfig.COMMON_CONFIG);

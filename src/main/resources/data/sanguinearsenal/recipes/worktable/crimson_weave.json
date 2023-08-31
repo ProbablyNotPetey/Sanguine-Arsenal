@@ -5,16 +5,13 @@
         "wgw",
         " w "
     ],
-    "reagents": "sccc",
+    "reagents": "cccc",
     "key": {
         "w": {
             "item": "eidolon:wicked_weave"
         },
         "c": {
             "item": "eidolon:crimson_essence"
-        },
-        "s": {
-            "item": "sanguinearsenal:sigil_of_the_dark_lord"
         },
         "g": {
             "item": "eidolon:shadow_gem"

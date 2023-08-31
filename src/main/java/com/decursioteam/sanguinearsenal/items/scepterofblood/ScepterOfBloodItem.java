@@ -6,6 +6,7 @@ import com.decursioteam.sanguinearsenal.core.init.EntityInit;
 import com.decursioteam.sanguinearsenal.entities.BloodProjectileEntity;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
+import elucent.eidolon.item.IRechargeableWand;
 import elucent.eidolon.registries.Sounds;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
@@ -30,7 +31,7 @@ import net.minecraft.world.level.Level;
 import static com.decursioteam.sanguinearsenal.core.Util.BloodUtil.*;
 import static com.decursioteam.sanguinearsenal.core.Util.LivingUtil.hasFullSPSet;
 
-public class ScepterOfBloodItem extends Item {
+public class ScepterOfBloodItem extends Item implements IRechargeableWand {
 
     public ScepterOfBloodItem(Item.Properties props) {
         super(props);
@@ -123,5 +124,11 @@ public class ScepterOfBloodItem extends Item {
             }
         }
         return InteractionResultHolder.pass(stack);
+    }
+
+    @Override
+    public ItemStack recharge(ItemStack stack) {
+        stack.setDamageValue(0);
+        return stack;
     }
 }

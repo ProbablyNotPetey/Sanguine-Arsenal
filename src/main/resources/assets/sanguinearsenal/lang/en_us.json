@@ -19,6 +19,9 @@
   "item.sanguinearsenal.praetor_scythe": "Praetor's Scythe",
   "block.sanguinearsenal.enchanted_glass": "Enchanted Glass",
 
+  "ritual.sanguinearsenal.sanguine_sigil_of_the_dark_lord": "Sigil of the Dark Lord",
+  "ritual.sanguinearsenal.praetor_scythe_recharging": "Recharge Praetor Scythe",
+  "ritual.sanguinearsenal.blood_scepter_recharging": "Recharge Scepter of Blood",
 
   "sanguinearsenal.not_enough_blood": "Not enough power. More Blood is required!",
   "sanguinearsenal.blood_aura_available": "Blood Aura available",

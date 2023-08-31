@@ -33,12 +33,13 @@ public class ArsEclesiaCodex {
     }
 
         public static String makeChapterKey(String path) {
-        return prefix + "chapter." + path;
-    }
+            return prefix + "chapter." + path;
+        }
+
+        //todo: redo entire book with new recipes
 
         public static void init() {
         {
-            //todo: redo this page
             BLESSING_OF_DARKNESS = new Chapter(makeChapterKey("blessing_of_darkness"),
                     new ChantPage(makePageKey("blessing_of_darkness.0"), Signs.MIND_SIGN, Signs.SOUL_SIGN, Signs.BLOOD_SIGN, Signs.SOUL_SIGN, Signs.MIND_SIGN),
                     new TextPage(makePageKey("blessing_of_darkness.1"))

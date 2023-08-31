@@ -5,6 +5,7 @@ import com.decursioteam.sanguinearsenal.core.Util.Keys;
 import com.decursioteam.sanguinearsenal.entities.FlyingScytheEntity;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
+import elucent.eidolon.item.IRechargeableWand;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.stats.Stats;
 import net.minecraft.util.Mth;
@@ -27,7 +28,7 @@ import static com.decursioteam.sanguinearsenal.core.Util.BloodUtil.getBloodAmoun
 import static com.decursioteam.sanguinearsenal.core.Util.BloodUtil.removeBlood;
 import static com.decursioteam.sanguinearsenal.core.Util.LivingUtil.hasFullSPSet;
 
-public class PraetorScythe extends Item {
+public class PraetorScythe extends Item implements IRechargeableWand {
 
     public PraetorScythe(Item.Properties props) {
         super(props);
@@ -105,5 +106,11 @@ public class PraetorScythe extends Item {
         }
         stack.hurtAndBreak(1, attacker, (e) -> attacker.awardStat(Stats.ITEM_USED.get(stack.getItem())));
         return super.onLeftClickEntity(stack, attacker, target);
+    }
+
+    @Override
+    public ItemStack recharge(ItemStack stack) {
+        stack.setDamageValue(0);
+        return stack;
     }
 }

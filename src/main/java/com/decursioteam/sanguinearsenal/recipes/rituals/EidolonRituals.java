@@ -1,6 +1,17 @@
 package com.decursioteam.sanguinearsenal.recipes.rituals;
 
-import elucent.eidolon.ritual.Ritual;
+import com.decursioteam.sanguinearsenal.SanguineArsenal;
+import com.decursioteam.sanguinearsenal.core.init.ItemInit;
+import elucent.eidolon.Registry;
+import elucent.eidolon.ritual.*;
+import elucent.eidolon.ritual.SanguineRitual;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.alchemy.PotionUtils;
+import net.minecraft.world.item.alchemy.Potions;
+import net.minecraft.world.level.ItemLike;
 
 public class EidolonRituals {
 
@@ -11,7 +22,43 @@ public class EidolonRituals {
     public static Ritual BLOOD_FLASK;
     public static Ritual BLOOD_SCEPTER;
 
+    public static Ritual SIGIL_OF_THE_DARK_LORD;
+    public static Ritual RECHARGE_PRAETOR_SCYTHE;
+    public static Ritual RECHARGE_BLOOD_SCEPTER;
+
     public static void init() {
+
+
+        //note: this will be moved to the touch spell system once spells are actually done!
+        SIGIL_OF_THE_DARK_LORD = RitualRegistry.register(new MultiItemSacrifice(PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.HARMING), Registry.UNHOLY_SYMBOL.get()),
+                new SanguineRitual(new ItemStack(ItemInit.SIGIL_OF_THE_DARK_LORD.get()))
+                .setRegistryName(new ResourceLocation(SanguineArsenal.MOD_ID, "sanguine_sigil_of_the_dark_lord"))
+                .addRequirement(new ItemRequirement(Registry.ZOMBIE_HEART.get()))
+                .addRequirement(new ItemRequirement(ItemInit.SHADOW_INFUSED_NUGGET.get()))
+                .addRequirement(new ItemRequirement(ItemInit.SHADOW_INFUSED_NUGGET.get()))
+                .addRequirement(new ItemRequirement(Registry.UNHOLY_SYMBOL.get()))
+                .addRequirement(new ItemRequirement(Registry.CRIMSON_ESSENCE.get()))
+                .addRequirement(new ItemRequirement(Registry.CRIMSON_ESSENCE.get()))
+                .addRequirement(new ItemRequirement(Registry.LESSER_SOUL_GEM.get()))
+        );
+
+        RECHARGE_PRAETOR_SCYTHE = RitualRegistry.register(Registry.LESSER_SOUL_GEM.get(),
+                new RechargingRitual().setRegistryName(SanguineArsenal.MOD_ID, "praetor_scythe_recharging")
+                .addRequirement(new ItemRequirement(Items.REDSTONE))
+                .addRequirement(new ItemRequirement(Items.REDSTONE))
+                .addRequirement(new ItemRequirement(Registry.CRIMSON_ESSENCE.get()))
+                .addRequirement(new ItemRequirement(Registry.CRIMSON_ESSENCE.get()))
+                .addInvariant(new FocusItemPresentRequirement(ItemInit.PRAETOR_SCYTHE.get()))
+        );
+
+        RECHARGE_BLOOD_SCEPTER = RitualRegistry.register(Registry.LESSER_SOUL_GEM.get(),
+                new RechargingRitual().setRegistryName(SanguineArsenal.MOD_ID, "blood_scepter_recharging")
+                        .addRequirement(new ItemRequirement(Items.REDSTONE))
+                        .addRequirement(new ItemRequirement(Items.REDSTONE))
+                        .addRequirement(new ItemRequirement(Registry.CRIMSON_ESSENCE.get()))
+                        .addRequirement(new ItemRequirement(Registry.CRIMSON_ESSENCE.get()))
+                        .addInvariant(new FocusItemPresentRequirement(ItemInit.SCEPTER_OF_BLOOD.get()))
+        );
 
         /*int fireColor = ColorUtil.packColor(255, 230, 30, 40);
         int purpleColor = ColorUtil.packColor(255, 128, 20, 135);

@@ -48,7 +48,7 @@ public class ItemInit {
     public static final RegistryObject<Item> ZOMBIE_HEART_STEW = ITEMS.register("zombie_heart_stew", () -> new ToolTipItem(new Item.Properties().tab(SangArsItemGroup.SANGUINE_ARSENAL).stacksTo(16).food(new FoodProperties.Builder().effect(() -> new MobEffectInstance(MobEffects.REGENERATION, 2200, 2), 0.85F).alwaysEat().nutrition(20).meat().saturationMod(1.5F).build())));
 
     public static final RegistryObject<Item> SANGUINE_CRYSTAL = ITEMS.register("sanguine_crystal",
-            () -> new SigilOfTheDarkLord(new Item.Properties().tab(SangArsItemGroup.SANGUINE_ARSENAL).stacksTo(1)));
+            () -> new SigilOfTheDarkLord(new Item.Properties().tab(SangArsItemGroup.SANGUINE_ARSENAL)));
     public static final RegistryObject<Item> SIGIL_OF_THE_DARK_LORD = ITEMS.register("sigil_of_the_dark_lord",
             () -> new SigilOfTheDarkLord(new Item.Properties().tab(SangArsItemGroup.SANGUINE_ARSENAL).rarity(Rarity.UNCOMMON).stacksTo(1)));
     public static final RegistryObject<Item> SHADOW_INFUSED_INGOT = ITEMS.register("shadow_ingot",
