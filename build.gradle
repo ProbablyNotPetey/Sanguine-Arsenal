@@ -108,8 +108,14 @@ dependencies {
     // Testing
     //implementation fg.deobf("curse.maven:hexblades-528079:3528648")
     //implementation fg.deobf("curse.maven:classicbars-317642:3240083")
-//    implementation fg.deobf("curse.maven:atum2-59621:3469295")
+
+    //Dimension compat
     implementation fg.deobf("curse.maven:twilightforest-227639:4389567")
+//    implementation fg.deobf("curse.maven:atum2-59621:3469295")
+    implementation fg.deobf("curse.maven:the_undergarden-379849:4057184")
+    implementation fg.deobf("curse.maven:the_bumblezone_forge-362479:4736722")
+    implementation fg.deobf("curse.maven:blue_skies-312918:3966273")
+    implementation fg.deobf("curse.maven:structure_gel_api-378802:4489756")
 
     // Just JEI
     compileOnly fg.deobf("mezz.jei:jei-${mc_version}-common-api:${jei_version}")

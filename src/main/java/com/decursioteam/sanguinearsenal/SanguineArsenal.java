@@ -54,7 +54,7 @@ public class SanguineArsenal {
             - Recharge Scythe + Staff rituals                                   DONE
             - Make sanguine crystals stackable                                  DONE
             - Classic bars compat
-            - More dimension compat
+            - More dimension compat                                             DONE (will add Midnight support when it's more stable)
             - Make Circle Tint particle look a bit better
             - EvilCraft compat?
             - Fix getting regen when equipping blood flask                      DONE

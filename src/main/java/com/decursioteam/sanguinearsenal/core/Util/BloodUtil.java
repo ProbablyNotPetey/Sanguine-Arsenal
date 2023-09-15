@@ -3,6 +3,9 @@ package com.decursioteam.sanguinearsenal.core.Util;
 import com.decursioteam.sanguinearsenal.core.network.Network;
 import com.decursioteam.sanguinearsenal.core.network.messages.BloodAuraMessage;
 import com.decursioteam.sanguinearsenal.core.network.messages.BloodMessage;
+import com.legacy.blue_skies.registries.SkiesDimensions;
+import com.telepathicgrunt.the_bumblezone.modinit.BzDimension;
+import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
 import net.minecraft.client.Minecraft;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffect;
@@ -12,6 +15,8 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.network.NetworkDirection;
+import quek.undergarden.registry.UGDimensions;
+import quek.undergarden.registry.UGEffects;
 import top.theillusivec4.curios.api.CuriosApi;
 import twilightforest.world.registration.TFGenerationSettings;
 
@@ -54,6 +59,13 @@ public class BloodUtil {
         if(world.dimension().equals(Level.NETHER)) effect = MobEffects.DAMAGE_BOOST;
         if(world.dimension().equals(Level.END)) effect = MobEffects.SLOW_FALLING;
         if(ModList.get().isLoaded("twilightforest") && world.dimension().equals(TFGenerationSettings.DIMENSION_KEY)) effect = MobEffects.MOVEMENT_SPEED;
+        if(ModList.get().isLoaded("undergarden") && world.dimension().equals(UGDimensions.UNDERGARDEN_LEVEL)) effect = UGEffects.VIRULENT_RESISTANCE.get();
+        if(ModList.get().isLoaded("blue_skies") && world.dimension().equals(SkiesDimensions.everdawnKey())) effect = MobEffects.DIG_SPEED;
+        if(ModList.get().isLoaded("blue_skies") && world.dimension().equals(SkiesDimensions.everbrightKey())) effect = MobEffects.JUMP;
+        if(ModList.get().isLoaded("the_bumblezone") && world.dimension().equals(BzDimension.BZ_WORLD_KEY)) {
+            effect = BzEffects.HIDDEN.get();
+            if(amplifier == 0) amplifier++;
+        }
 
         if(effect == null) return;
         if(!playerEntity.hasEffect(effect)) {

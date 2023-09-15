@@ -182,7 +182,11 @@ public class ArsEclesiaCodex {
                     new TitlePage(makePageKey("full_set.overworld")),
                     new TitlePage(makePageKey("full_set.nether")),
                     new TitlePage(makePageKey("full_set.end")),
-                    new TitlePage(makePageKey("full_set.twilight_forest"))
+                    new TitlePage(makePageKey("full_set.twilight_forest")),
+                    new TitlePage(makePageKey("full_set.undergarden")),
+                    new TitlePage(makePageKey("full_set.everbright")),
+                    new TitlePage(makePageKey("full_set.everdawn")),
+                    new TitlePage(makePageKey("full_set.bumblezone"))
 //                    new TitlePage(makePageKey("full_set.atum"))
                 );
             }

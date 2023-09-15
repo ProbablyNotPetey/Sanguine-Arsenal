@@ -39,23 +39,9 @@ side = "BOTH"
 #optional
 
 #[[dependencies.sanguinearsenal]]
-#modId = "atum"
+#modId = "classicbar"
 #mandatory = false
-#versionRange = "[1.16.5-2.2.8,)"
+#versionRange = "[6-1.19.2,)"
 #ordering = "AFTER"
 #side = "BOTH"
-
-[[dependencies.sanguinearsenal]]
-modId = "twilightforest"
-mandatory = false
-versionRange = "[1.19.2-4.2.1468,)"
-ordering = "AFTER"
-side = "BOTH"
-
-[[dependencies.sanguinearsenal]]
-modId = "classicbar"
-mandatory = false
-versionRange = "[6-1.19.2,)"
-ordering = "AFTER"
-side = "BOTH"
 
