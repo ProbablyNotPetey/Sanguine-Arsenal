@@ -70,7 +70,7 @@ public class SangArsConfig {
 //                    .defineInRange("bloodFlaskEffectMultiplier", 1, 0, 100000);
             bloodAuraEffectMultiplier = COMMON_BUILDER
                     .comment("Set the multiplier of the effects that a player receives when they have activated 'Blood Aura'.")
-                    .defineInRange("bloodAuraEffectMultiplier", 3, 0, 100000);
+                    .defineInRange("bloodAuraEffectMultiplier", 2, 1, 100000);
             bloodDrainSpeed = COMMON_BUILDER
                     .comment("Set how quickly the blood amount that the player has in their Sanguine Praetor Armor while wearing a Blood Flask goes down when they activate 'Blood Aura'."
                             , "This value represents ticks, 20 ticks = 1 second.")

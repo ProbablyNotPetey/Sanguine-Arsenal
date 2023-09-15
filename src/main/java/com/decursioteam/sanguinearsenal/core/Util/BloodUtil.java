@@ -5,6 +5,7 @@ import com.decursioteam.sanguinearsenal.core.network.messages.BloodAuraMessage;
 import com.decursioteam.sanguinearsenal.core.network.messages.BloodMessage;
 import net.minecraft.client.Minecraft;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.player.Player;
@@ -12,11 +13,10 @@ import net.minecraft.world.level.Level;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.network.NetworkDirection;
 import top.theillusivec4.curios.api.CuriosApi;
-import twilightforest.init.TFDimensionSettings;
+import twilightforest.world.registration.TFGenerationSettings;
 
 import java.util.Objects;
 
-//import static twilightforest.world.TFGenerationSettings.isStrictlyTwilightForest;
 
 public class BloodUtil {
 
@@ -48,23 +48,20 @@ public class BloodUtil {
         return playerEntity.getPersistentData().getBoolean(bloodAuraTAG);
     }
 
-    public static void addEffects(Level world, Player playerEntity, int amplifier, int duration, boolean regen) {
-        if(regen && !playerEntity.hasEffect(MobEffects.REGENERATION)) playerEntity.addEffect(new MobEffectInstance(MobEffects.REGENERATION, duration, amplifier, true, true));
-        if (world.dimension() == Level.OVERWORLD && !playerEntity.hasEffect(MobEffects.DAMAGE_RESISTANCE)) {
-            playerEntity.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, duration, amplifier, true, true));
+    public static void addDimensionEffects(Level world, Player playerEntity, int amplifier, int duration) {
+        MobEffect effect = null;
+        if(world.dimension().equals(Level.OVERWORLD)) effect = MobEffects.DAMAGE_RESISTANCE;
+        if(world.dimension().equals(Level.NETHER)) effect = MobEffects.DAMAGE_BOOST;
+        if(world.dimension().equals(Level.END)) effect = MobEffects.SLOW_FALLING;
+        if(ModList.get().isLoaded("twilightforest") && world.dimension().equals(TFGenerationSettings.DIMENSION_KEY)) effect = MobEffects.MOVEMENT_SPEED;
+
+        if(effect == null) return;
+        if(!playerEntity.hasEffect(effect)) {
+            playerEntity.addEffect(new MobEffectInstance(effect, duration, amplifier, true, true));
         }
-        if (world.dimension() == Level.NETHER && !playerEntity.hasEffect(MobEffects.DAMAGE_BOOST)) {
-            playerEntity.addEffect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, duration, amplifier, true, true));
-        }
-        if (world.dimension() == Level.END && !playerEntity.hasEffect(MobEffects.SLOW_FALLING)) {
-            playerEntity.addEffect(new MobEffectInstance(MobEffects.SLOW_FALLING, duration, amplifier, true, true));
-        }
-//        if (ModList.get().isLoaded("atum") && world.dimension() == Atum.ATUM && !playerEntity.hasEffect(MobEffects.DIG_SPEED)) {
-//            playerEntity.addEffect(new MobEffectInstance()(MobEffects.DIG_SPEED, duration, amplifier, true, true));
-//        }
-        if (ModList.get().isLoaded("twilightforest") && world.dimensionType() == TFDimensionSettings.TWILIGHT_DIM_TYPE.get() && !playerEntity.hasEffect(MobEffects.MOVEMENT_SPEED)) {
-            playerEntity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, duration, amplifier, true, true));
-        }
+    }
+    public static void addRegen(Player playerEntity, int amplifier, int duration) {
+        if(!playerEntity.hasEffect(MobEffects.REGENERATION)) playerEntity.addEffect(new MobEffectInstance(MobEffects.REGENERATION, duration, amplifier, true, true));
     }
 
     public static void addBlood(Player playerEntity, int amount) {
